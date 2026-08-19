@@ -29,7 +29,7 @@ seus currículos para diferentes oportunidades.
 
 ### Front-end
 - React
-- TypeScript
+- Javascript
 - Vite
 - CSS
 
