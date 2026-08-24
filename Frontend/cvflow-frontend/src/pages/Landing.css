@@ -1,0 +1,228 @@
+/* Formatações gerais */
+html {
+  background-color: #FFF;
+  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* Header */
+header {
+  height: 80px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logo img {
+  max-width: 100px;
+  max-height: 100px;
+  cursor: pointer;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.nav li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+  color: #334155; 
+}
+
+.nav li a {
+  text-decoration: none;
+  color: #334155;           
+  font-weight: bold;
+  padding-left: 4px;
+  transition: 0.4s;
+}
+
+.nav li:hover,
+.nav li a:hover {
+   color: #2563EB;
+}
+
+.botoes-header {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.botoes-header button{
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.botoes-header .login {
+  width: 80px;
+  height: 50px;
+  background-color: #FFF;
+  color: #334155;
+  transition: 0.4s;  
+}
+
+.botoes-header .login:hover {
+  background-color: #F8FAFC;
+}
+
+.botoes-header .cadastro {
+  width: 140px;
+  height: 50px;
+  color: #FFF;
+  background-color: #2563EB;
+  transition: 0.4s;
+}
+
+.botoes-header .cadastro:hover {
+  background-color: #1D4ED8;
+}
+
+/* Main */
+
+/* Seção 1 */
+.s1 {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 90px;
+}
+
+.s1 .badge {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid #DBEAFE;
+  border-radius: 10px;
+  width: 200px;
+  height: 40px;
+}
+
+.s1 .badge span {
+  padding-left: 6px;
+  font-size: 14px;
+}
+
+.caixa-texto {
+  margin-top: 36px;
+}
+
+.caixa-texto h2{
+  font-size: 55px;
+  color: #334155;
+}
+
+.caixa-texto h2.destaque{
+  color: #2563EB;
+}
+
+.resumo {
+  padding-top: 15px;
+}
+
+.resumo p {
+  color: #334155;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.caixa-botoes {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.caixa-botoes button {
+  text-align: center;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.caixa-botoes button.b1-main {
+  width: 230px;
+  height: 50px;
+  color: #FFF;
+  background-color: #2563EB;
+  transition: 0.4s;
+}
+
+.caixa-botoes button.b1-main:hover {
+  background-color: #1D4ED8;
+}
+
+.caixa-botoes button.b2-main {
+  width: 150px;
+  height: 50px;
+  background-color: #FFF;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  transition: 0.4s;
+}
+
+.caixa-botoes button.b2-main:hover {
+  background-color: #f3f3f3;
+}
+
+.area-tempo {
+  margin-top: 20px;
+}
+
+.area-tempo .c1-area-tempo {
+  margin-bottom: 8px;
+}
+
+.area-tempo .c1-area-tempo span {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.area-tempo .c2-area-tempo span {
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.caixa-right img:hover {
+  width: 860px;
+}
+
+.caixa-right img {
+  width: 850px;
+  transition: 0.4s;
+}
+
+/* Seção 2 */
+.s2 {
+  margin-top: 50px;
+  background-color: #f3f8ff;
+  height: 300px;
+}
+
+.s2 h2 {
+  text-align: center;
+  padding-top: 50px;
+  font-size: 24px;
+  color: #2f3b4b
+}
