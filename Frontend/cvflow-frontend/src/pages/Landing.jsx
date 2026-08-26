@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import '../pages/Landing.css'
 import logo from '../assets/logo-cvflow-sem-fundo.png'
 import curriculoIlustrativo from '../assets/curriculo-picture-main.png'
@@ -19,10 +21,14 @@ import {
   ShieldCheck,
   LockKeyhole,
   CircleCheck,
-  Rocket
+  Rocket,
+  X,
+  Menu
 } from "lucide-react";
 
 const Landing = () => {
+  const [menuAberto, setMenuAberto] = useState(false)
+
   return (
   <>
     <header>
@@ -30,6 +36,8 @@ const Landing = () => {
         <div className='logo'>
           <img src={logo} alt="Logo CVFlow" />
         </div>
+
+      {/* Menu do desktop */}  
       <nav>
         <ul className='nav'>
           <li>
@@ -51,7 +59,54 @@ const Landing = () => {
         <button className='cadastro'>Começar grátis</button>
       </div>
 
+      {/* Mobile */}
+      <button className='menu-mobile' onClick={() => setMenuAberto(!menuAberto)}>
+        {menuAberto ? <X size={28}/> : <Menu size={28}/>}
+      </button>
+
       </div>
+
+      {menuAberto && (
+        <nav className="mobile-nav">
+
+        <a
+          href="#recursos"
+          onClick={() => setMenuAberto(false)}
+        >
+          <Layers size={18}/>
+          Recursos
+        </a>
+
+        <a
+          href="#funcionamento"
+          onClick={() => setMenuAberto(false)}
+        >
+          <Workflow size={18}/>
+          Como funciona
+        </a>
+
+        <a
+          href="#sobre"
+          onClick={() => setMenuAberto(false)}
+        >
+          <Info size={18}/>
+            Sobre
+        </a>
+
+      <button
+        className="mobile-cadastro"
+        onClick={() => {
+          setMenuAberto(false);
+          // futuramente colocar navegação para criação *****
+        }}
+      >
+        Começar grátis
+      </button>
+
+    </nav>
+  )}
+
+      
     </header>
 
     <main>
@@ -73,7 +128,7 @@ const Landing = () => {
             </div>
 
             <div className="caixa-botoes">
-              <button className='b1-main'>Criar meu curriculo grátis <ArrowRight size={15} className='arrow'/></button>
+              <button className='b1-main'>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
               <button className='b2-main'>Ver exemplo</button>
             </div>
 
@@ -102,21 +157,27 @@ const Landing = () => {
 
         <div className="lista-recursos">
           <div className="r1">
-            <FileText size={50} className='icon-recursos i1'/>
+            <div className="icone i1">
+              <FileText size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Criação simples</h3>
               <p>Preencha seus dados de forma rápida e intuitiva.</p>
             </div>
           </div>
           <div className="r2">
-            <Sparkles size={50} className='icon-recursos i2'/>
+            <div className="icone i2">
+              <Sparkles size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Personalização inteligente</h3>
               <p>Organize suas experiências e destaque suas principais habilidades.</p>
             </div>
           </div>
           <div className="r3">
-            <Download size={50} className='icon-recursos i3'/>
+            <div className="icone i3">
+              <Download size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Currículo pronto para enviar</h3>
               <p>Gere seu currículo em PDF com um visual profissional.</p>
@@ -139,7 +200,9 @@ const Landing = () => {
         </div>
         <div className="lista-recursos">
           <div className="r1">
-            <UserRound size={40} className='icon-recursos i1'/>
+            <div className='icone i1'>
+              <UserRound size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Preencha seus dados</h3>
               <p>informação pessoais, experiência, formação, habilidades e muito mais de forma intuitiva.</p>
@@ -147,7 +210,9 @@ const Landing = () => {
           </div>
           <ArrowRight size={40} className='arrow-blue'/>
           <div className="r2">
-            <SlidersHorizontal size={40} className='icon-recursos i2'/>
+            <div className="icone i2">
+              <SlidersHorizontal size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Personalize seu currículo</h3>
               <p>Escolha o modelo, organize as seções e destaque o que realmente importa para sua área.</p>
@@ -155,7 +220,9 @@ const Landing = () => {
           </div>
           <ArrowRight size={40} className='arrow-blue'/>
           <div className="r3">
-            <FileDown size={40} className='icon-recursos i3'/>
+            <div className="icone i3">
+              <FileDown size={30} className='icon-recursos'/>
+            </div>
             <div className="texto-recursos">
               <h3>Gere e baixe em PDF</h3>
               <p>seu currículo pronto para enviar, com um layout profissional e de alta qualidade</p>
