@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import '../pages/Landing.css'
 import logo from '../assets/logo-cvflow-sem-fundo.png'
@@ -28,6 +29,7 @@ import {
 
 const Landing = () => {
   const [menuAberto, setMenuAberto] = useState(false)
+  const navigate = useNavigate()
 
   return (
   <>
@@ -97,7 +99,7 @@ const Landing = () => {
         className="mobile-cadastro"
         onClick={() => {
           setMenuAberto(false);
-          // futuramente colocar navegação para criação *****
+          
         }}
       >
         Começar grátis
@@ -128,7 +130,7 @@ const Landing = () => {
             </div>
 
             <div className="caixa-botoes">
-              <button className='b1-main'>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
+              <button className='b1-main' onClick={() => navigate('/flow')}>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
               <button className='b2-main'>Ver exemplo</button>
             </div>
 
