@@ -1,0 +1,739 @@
+/* =========================================
+   PÁGINA
+========================================= */
+
+.configs-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+
+  background: #f8faff;
+
+  color: #334155;
+}
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.configs-content {
+  flex: 1;
+  min-width: 0;
+
+  padding: 42px 55px 50px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.configs-header {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto 48px;
+}
+
+
+.configs-badge {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 7px 12px;
+
+  margin-bottom: 14px;
+
+  border-radius: 20px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.configs-header h1 {
+  margin: 0 0 9px;
+
+  color: #2f3b4b;
+
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+
+.configs-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 23px;
+}
+
+
+/* =========================================
+   SEÇÕES
+========================================= */
+
+.configs-section {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto 20px;
+
+  padding: 24px 26px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 15px rgba(15, 23, 42, 0.03);
+}
+
+
+/* =========================================
+   CABEÇALHO DA SEÇÃO
+========================================= */
+
+.configs-section-header {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+
+.configs-section-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+}
+
+
+.configs-section-icon.blue {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+.configs-section-icon.purple {
+  background: #f5f3ff;
+
+  color: #7c3aed;
+}
+
+
+.configs-section-header h2 {
+  margin: 0 0 4px;
+
+  color: #334155;
+
+  font-size: 16px;
+  font-weight: 650;
+}
+
+
+.configs-section-header p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   DIVISOR
+========================================= */
+
+.configs-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 22px 0;
+
+  background: #eef2f7;
+}
+
+
+/* =========================================
+   OPÇÕES
+========================================= */
+
+.config-option {
+  min-height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding: 10px 0;
+}
+
+
+.config-option-info {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+
+.config-option-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  color: #64748b;
+}
+
+
+.config-option-info strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.config-option-info span {
+  display: block;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   SELECT
+========================================= */
+
+.config-option select {
+  height: 40px;
+
+  min-width: 125px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.config-option select:hover {
+  border-color: #bfdbfe;
+}
+
+
+.config-option select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px #eff6ff;
+}
+
+
+/* =========================================
+   SEGURANÇA
+========================================= */
+
+.security-option {
+  width: 100%;
+
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 10px 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #64748b;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+
+.security-option-left {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 0;
+}
+
+
+.security-option strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.security-option span {
+  display: block;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+.security-option > svg {
+  flex-shrink: 0;
+
+  color: #94a3b8;
+
+  transition: 0.2s;
+}
+
+
+.security-option:hover > svg {
+  color: #2563eb;
+
+  transform: translateX(2px);
+}
+
+
+.security-option.danger:hover > svg {
+  color: #dc2626;
+}
+
+
+.security-option.danger:hover strong {
+  color: #dc2626;
+}
+
+
+.danger-icon {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.configs-footer {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 22px auto 0;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.configs-save-button {
+  height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.configs-save-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 18px rgba(37, 99, 235, 0.18);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .configs-content {
+    padding: 35px;
+  }
+
+
+  .configs-header {
+    margin-bottom: 35px;
+  }
+
+
+  .configs-section {
+    padding: 22px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .configs-page {
+    display: block;
+
+    padding-bottom: 90px;
+  }
+
+
+  .configs-content {
+    width: 100%;
+
+    padding: 28px 20px 30px;
+  }
+
+
+  .configs-header {
+    margin-bottom: 38px;
+  }
+
+
+  .configs-header h1 {
+    font-size: 28px;
+  }
+
+
+  .configs-header p {
+    font-size: 14px;
+
+    line-height: 22px;
+  }
+
+
+  .configs-section {
+    padding: 20px;
+
+    margin-bottom: 16px;
+
+    border-radius: 14px;
+  }
+
+
+  .config-option {
+    align-items: flex-start;
+
+    padding: 13px 0;
+  }
+
+
+  .config-option-info {
+    gap: 10px;
+  }
+
+
+  .config-option-info span {
+    line-height: 18px;
+  }
+
+
+  .configs-footer {
+    margin-top: 20px;
+
+    padding-bottom: 15px;
+  }
+
+
+  .configs-save-button {
+    width: 100%;
+
+    height: 48px;
+  }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 480px) {
+
+  .configs-page {
+    padding-bottom: 85px;
+  }
+
+
+  .configs-content {
+    padding: 23px 16px 25px;
+  }
+
+
+  .configs-header {
+    margin-bottom: 34px;
+  }
+
+
+  .configs-badge {
+    margin-bottom: 11px;
+
+    font-size: 12px;
+  }
+
+
+  .configs-header h1 {
+    font-size: 25px;
+  }
+
+
+  .configs-header p {
+    font-size: 13px;
+
+    line-height: 21px;
+  }
+
+
+  .configs-section {
+    padding: 18px;
+
+    border-radius: 13px;
+  }
+
+
+  .configs-section-header {
+    gap: 10px;
+  }
+
+
+  .configs-section-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  .configs-section-header h2 {
+    font-size: 15px;
+  }
+
+
+  .configs-section-header p {
+    font-size: 11px;
+
+    line-height: 17px;
+  }
+
+
+  .configs-divider {
+    margin: 18px 0;
+  }
+
+
+  .config-option {
+    gap: 12px;
+  }
+
+
+  .config-option-info {
+    gap: 9px;
+  }
+
+
+  .config-option-icon {
+    width: 35px;
+    height: 35px;
+  }
+
+
+  .config-option-info strong {
+    font-size: 13px;
+  }
+
+
+  .config-option-info span {
+    font-size: 11px;
+
+    line-height: 17px;
+  }
+
+
+  .config-option select {
+    min-width: 95px;
+
+    height: 38px;
+
+    padding: 0 8px;
+
+    font-size: 12px;
+  }
+
+
+  .security-option {
+    min-height: 65px;
+  }
+
+
+  .security-option strong {
+    font-size: 13px;
+  }
+
+
+  .security-option span {
+    font-size: 11px;
+
+    line-height: 17px;
+  }
+
+
+  .configs-footer {
+    margin-top: 18px;
+  }
+
+}
+
+
+/* =========================================
+   CELULAR PEQUENO
+========================================= */
+
+@media (max-width: 380px) {
+
+  .configs-content {
+    padding: 20px 14px 25px;
+  }
+
+
+  .configs-header {
+    margin-bottom: 30px;
+  }
+
+
+  .configs-header h1 {
+    font-size: 23px;
+  }
+
+
+  .configs-section {
+    padding: 16px;
+  }
+
+
+  .config-option {
+    gap: 8px;
+  }
+
+
+  .config-option-info {
+    gap: 7px;
+  }
+
+
+  .config-option-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .config-option-info strong {
+    font-size: 12px;
+  }
+
+
+  .config-option-info span {
+    font-size: 10px;
+
+    line-height: 16px;
+  }
+
+
+  .config-option select {
+    min-width: 85px;
+
+    font-size: 11px;
+  }
+
+}

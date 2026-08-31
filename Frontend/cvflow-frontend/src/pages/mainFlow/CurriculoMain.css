@@ -1,0 +1,707 @@
+/* =========================================
+   LAYOUT PRINCIPAL
+========================================= */
+
+.curriculos-layout {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f8faff;
+
+  display: flex;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   CONTEÚDO DA PÁGINA
+========================================= */
+
+.curriculos-page {
+  width: calc(100% - 250px);
+
+  min-height: 100vh;
+
+  margin-top: 50px;
+  margin-left: 250px;
+
+  padding: 40px 50px;
+
+  box-sizing: border-box;
+
+  background: #f8faff;
+
+  color: #334155;
+}
+
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.curriculos-header {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+.curriculos-header > div {
+  min-width: 0;
+}
+
+
+/* =========================================
+   BADGE
+========================================= */
+
+.curriculos-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #eff6ff;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   TÍTULO
+========================================= */
+
+.curriculos-header h1 {
+  margin: 0 0 10px;
+
+  color: #2f3b4b;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.curriculos-header p {
+  margin: 0;
+
+  max-width: 650px;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 24px;
+}
+
+
+/* =========================================
+   BOTÃO NOVO CURRÍCULO
+========================================= */
+
+.novo-curriculo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 48px;
+
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.novo-curriculo-button:hover {
+  background: #1d4ed8;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   TOOLBAR
+========================================= */
+
+.curriculos-toolbar {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 40px auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+/* =========================================
+   BUSCA
+========================================= */
+
+.curriculos-search {
+  width: 100%;
+  max-width: 380px;
+
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 14px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 1px solid #dbe3ef;
+
+  border-radius: 10px;
+
+  transition: 0.3s;
+}
+
+.curriculos-search:focus-within {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.curriculos-search svg {
+  flex-shrink: 0;
+
+  color: #64748b;
+}
+
+.curriculos-search input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+.curriculos-search input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   CONTADOR
+========================================= */
+
+.curriculos-count {
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* =========================================
+   LISTA
+========================================= */
+
+.curriculos-list {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.curriculo-card {
+  width: 100%;
+
+  min-height: 115px;
+
+  padding: 22px 24px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  background: #fff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.curriculo-card:hover {
+  border-color: #bfdbfe;
+
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   ÍCONE
+========================================= */
+
+.curriculo-icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+/* =========================================
+   INFORMAÇÕES
+========================================= */
+
+.curriculo-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.curriculo-info h2 {
+  margin: 0 0 5px;
+
+  color: #334155;
+
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.curriculo-cargo {
+  margin: 0 0 9px;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.curriculo-meta {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.curriculo-meta span {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.curriculo-status {
+  padding: 4px 9px;
+
+  border-radius: 20px;
+
+  background: #ecfdf5;
+
+  color: #059669;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   AÇÕES
+========================================= */
+
+.curriculo-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.curriculo-action,
+.curriculo-more {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.curriculo-action:hover {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.curriculo-action.danger:hover {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+.curriculo-more:hover {
+  background: #f1f5f9;
+
+  color: #334155;
+}
+
+
+/* =========================================
+   ESTADO VAZIO
+========================================= */
+
+.curriculos-empty {
+  min-height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 50px 30px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 16px;
+
+  text-align: center;
+}
+
+.empty-icon {
+  width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 16px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.curriculos-empty h2 {
+  margin: 0 0 8px;
+
+  color: #334155;
+
+  font-size: 19px;
+}
+
+.curriculos-empty p {
+  max-width: 430px;
+
+  margin: 0 0 22px;
+
+  color: #64748b;
+
+  font-size: 14px;
+  line-height: 23px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .curriculos-page {
+    padding: 35px 30px;
+  }
+
+  .curriculos-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 22px;
+  }
+
+  .novo-curriculo-button {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   TABLET / SIDEBAR
+========================================= */
+
+@media (max-width: 768px) {
+
+  .curriculos-page {
+    width: 100%;
+
+    margin-left: 0;
+
+    padding: 30px 25px;
+  }
+
+  .curriculos-toolbar {
+    margin-top: 32px;
+
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .curriculos-search {
+    max-width: none;
+  }
+
+  .curriculos-count {
+    align-self: flex-end;
+  }
+
+  .curriculo-card {
+    padding: 18px;
+  }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 480px) {
+
+  .curriculos-page {
+    padding: 25px 18px 35px;
+  }
+
+  .curriculos-header {
+    gap: 20px;
+  }
+
+  .curriculos-badge {
+    margin-bottom: 12px;
+  }
+
+  .curriculos-header h1 {
+    font-size: 27px;
+  }
+
+  .curriculos-header p {
+    font-size: 14px;
+
+    line-height: 22px;
+  }
+
+  .curriculos-toolbar {
+    margin: 28px auto 16px;
+
+    gap: 12px;
+  }
+
+  .curriculos-search {
+    height: 48px;
+  }
+
+  .curriculos-count {
+    font-size: 12px;
+  }
+
+
+  /* CARD */
+
+  .curriculo-card {
+    min-height: auto;
+
+    padding: 17px;
+
+    align-items: flex-start;
+
+    gap: 13px;
+  }
+
+  .curriculo-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 10px;
+  }
+
+  .curriculo-info h2 {
+    font-size: 15px;
+  }
+
+  .curriculo-cargo {
+    font-size: 12px;
+  }
+
+  .curriculo-meta {
+    flex-wrap: wrap;
+
+    gap: 7px;
+  }
+
+  .curriculo-actions {
+    margin-left: auto;
+  }
+
+  .curriculo-action {
+    display: none;
+  }
+
+  .curriculo-more {
+    width: 34px;
+    height: 34px;
+  }
+
+
+  /* ESTADO VAZIO */
+
+  .curriculos-empty {
+    min-height: 320px;
+
+    padding: 35px 20px;
+  }
+
+  .curriculos-empty h2 {
+    font-size: 17px;
+  }
+
+  .curriculos-empty p {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================
+   CELULARES PEQUENOS
+========================================= */
+
+@media (max-width: 380px) {
+
+  .curriculos-page {
+    padding: 22px 15px 30px;
+  }
+
+  .curriculos-header h1 {
+    font-size: 25px;
+  }
+
+  .curriculo-card {
+    padding: 14px;
+  }
+
+  .curriculo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .curriculo-meta {
+    font-size: 11px;
+  }
+
+}

@@ -1,0 +1,604 @@
+/* =========================================
+   PROFILE
+========================================= */
+
+.profile-page {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+
+  background: #f8faff;
+  color: #334155;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   CONTEÚDO
+========================================= */
+
+.profile-content {
+  flex: 1;
+  min-width: 0;
+
+  padding: 45px 55px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.profile-header {
+  width: 100%;
+  max-width: 1008px;
+
+  margin: 0 auto 28px;
+}
+
+.profile-header h1 {
+  margin: 0 0 8px;
+
+  color: #2f3b4b;
+
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.profile-header p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 24px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.profile-card {
+  width: 100%;
+  max-width: 1008px;
+
+  margin: 0 auto 18px;
+
+  padding: 24px 26px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 15px;
+
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+}
+
+
+/* =========================================
+   CABEÇALHO DO CARD
+========================================= */
+
+.profile-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.profile-card-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.profile-card-header h2 {
+  margin: 0 0 3px;
+
+  color: #334155;
+
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.profile-card-header p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   DIVISOR
+========================================= */
+
+.profile-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 20px 0;
+
+  background: #eef2f7;
+}
+
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+.profile-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px 18px;
+}
+
+.profile-professional-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* =========================================
+   CAMPO
+========================================= */
+
+.profile-field {
+  width: 100%;
+}
+
+.profile-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #334155;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.profile-input {
+  width: 100%;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 13px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  background: #fff;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-input:focus-within {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.profile-input svg {
+  flex-shrink: 0;
+
+  color: #94a3b8;
+}
+
+.profile-input input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-size: 13px;
+}
+
+.profile-input input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   TEXTAREA
+========================================= */
+
+.profile-textarea {
+  width: 100%;
+  min-height: 115px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  padding: 13px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+
+  background: #fff;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.profile-textarea:focus-within {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.profile-textarea svg {
+  flex-shrink: 0;
+
+  margin-top: 1px;
+
+  color: #94a3b8;
+}
+
+.profile-textarea textarea {
+  width: 100%;
+  min-height: 90px;
+
+  resize: vertical;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  line-height: 21px;
+}
+
+.profile-textarea textarea::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   AÇÕES
+========================================= */
+
+.profile-actions {
+  width: 100%;
+  max-width: 1008px;
+
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-save-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  height: 44px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-save-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 7px 18px rgba(37, 99, 235, 0.18);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .profile-content {
+    padding: 35px;
+  }
+
+  .profile-header,
+  .profile-card,
+  .profile-actions {
+    max-width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .profile-page {
+    display: block;
+
+    min-height: 100vh;
+  }
+
+
+  .profile-content {
+    width: 100%;
+
+    padding: 28px 20px 110px;
+
+    box-sizing: border-box;
+  }
+
+
+  .profile-header {
+    margin-bottom: 25px;
+  }
+
+
+  .profile-header h1 {
+    font-size: 27px;
+  }
+
+
+  .profile-header p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+
+  .profile-card {
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+    border-radius: 14px;
+  }
+
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 17px;
+  }
+
+
+  .profile-card-header h2 {
+    font-size: 15px;
+  }
+
+
+  .profile-card-header p {
+    font-size: 11px;
+  }
+
+
+  .profile-actions {
+    margin-top: 5px;
+
+    padding-bottom: 10px;
+
+    justify-content: stretch;
+  }
+
+
+  .profile-save-button {
+    width: 100%;
+
+    height: 48px;
+  }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 480px) {
+
+  .profile-content {
+    padding: 23px 16px 115px;
+  }
+
+
+  .profile-header {
+    margin-bottom: 22px;
+  }
+
+
+  .profile-header h1 {
+    font-size: 24px;
+
+    margin-bottom: 6px;
+  }
+
+
+  .profile-header p {
+    font-size: 13px;
+
+    line-height: 21px;
+  }
+
+
+  .profile-card {
+    padding: 18px 16px;
+
+    border-radius: 13px;
+  }
+
+
+  .profile-card-header {
+    gap: 10px;
+  }
+
+
+  .profile-card-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+
+  .profile-card-header h2 {
+    font-size: 14px;
+  }
+
+
+  .profile-card-header p {
+    font-size: 10px;
+  }
+
+
+  .profile-divider {
+    margin: 17px 0;
+  }
+
+
+  .profile-field label {
+    font-size: 11px;
+  }
+
+
+  .profile-input {
+    height: 48px;
+
+    padding: 0 12px;
+  }
+
+
+  .profile-input input {
+    font-size: 13px;
+  }
+
+
+  .profile-textarea {
+    min-height: 120px;
+
+    padding: 12px;
+  }
+
+
+  .profile-textarea textarea {
+    font-size: 13px;
+  }
+
+
+  .profile-actions {
+    margin-top: 3px;
+
+    padding-bottom: 5px;
+  }
+
+
+  .profile-save-button {
+    height: 48px;
+
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================
+   CELULARES PEQUENOS
+========================================= */
+
+@media (max-width: 380px) {
+
+  .profile-content {
+    padding: 20px 14px 120px;
+  }
+
+
+  .profile-header h1 {
+    font-size: 23px;
+  }
+
+
+  .profile-card {
+    padding: 16px 14px;
+  }
+
+
+  .profile-card-header p {
+    display: none;
+  }
+
+
+  .profile-input {
+    height: 46px;
+  }
+
+
+  .profile-save-button {
+    height: 46px;
+  }
+
+}

@@ -1,0 +1,461 @@
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.mainflow-sidebar {
+  width: 250px;
+  height: 100vh;
+
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+
+  background: #ffffff;
+
+  border-right: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px 20px;
+
+  flex-shrink: 0;
+}
+
+
+.sidebar-logo img {
+  width: 110px;
+
+  display: block;
+}
+
+
+/* =========================================
+   NAVEGAÇÃO
+========================================= */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px 15px;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+}
+
+
+.nav-title {
+  padding: 0 12px;
+
+  margin-bottom: 8px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+
+.sidebar-settings-title {
+  margin-top: 25px;
+}
+
+
+/* =========================================
+   ITENS DA SIDEBAR
+========================================= */
+
+.sidebar-item {
+  width: 100%;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 12px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+
+.sidebar-item:hover {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+.sidebar-item.active {
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+
+.sidebar-item svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   PARTE INFERIOR
+========================================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding: 15px;
+
+  flex-shrink: 0;
+}
+
+
+.sidebar-item.logout {
+  margin-bottom: 15px;
+}
+
+
+/* =========================================
+   USUÁRIO
+========================================= */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  border-top: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+
+.user-info strong {
+  color: #334155;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+
+.user-info span {
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .mainflow-sidebar {
+    width: 220px;
+  }
+
+
+  .sidebar-logo {
+    padding: 27px 15px;
+  }
+
+
+  .sidebar-logo img {
+    width: 100px;
+  }
+
+
+  .sidebar-nav {
+    padding: 10px 12px;
+  }
+
+
+  .sidebar-item {
+    height: 44px;
+
+    font-size: 13px;
+  }
+
+
+  .sidebar-bottom {
+    padding: 12px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .mainflow-sidebar {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    top: auto;
+
+    width: 100%;
+    height: 72px;
+
+    z-index: 1000;
+
+    display: block;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e5e7eb;
+    border-right: none;
+
+    box-shadow:
+      0 -5px 20px rgba(15, 23, 42, 0.06);
+
+    overflow: visible;
+  }
+
+
+  /* -----------------------------------------
+     LOGO
+  ----------------------------------------- */
+
+  .sidebar-logo {
+    display: none;
+  }
+
+
+  /* -----------------------------------------
+     NAVEGAÇÃO
+  ----------------------------------------- */
+
+  .sidebar-nav {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    align-items: center;
+
+    gap: 0;
+
+    padding: 5px 8px;
+
+    box-sizing: border-box;
+  }
+
+
+  .nav-title,
+  .sidebar-settings-title {
+    display: none;
+  }
+
+
+  /* -----------------------------------------
+     ITENS
+  ----------------------------------------- */
+
+  .sidebar-nav .sidebar-item {
+    width: 100%;
+    height: 62px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 5px 2px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    color: #64748b;
+
+    box-sizing: border-box;
+  }
+
+
+  .sidebar-nav .sidebar-item svg {
+    width: 20px;
+    height: 20px;
+  }
+
+
+  .sidebar-nav .sidebar-item:hover {
+    background: transparent;
+
+    color: #2563eb;
+  }
+
+
+  .sidebar-nav .sidebar-item.active {
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-weight: 600;
+  }
+
+
+  /* -----------------------------------------
+     PARTE INFERIOR
+  ----------------------------------------- */
+
+  .sidebar-bottom {
+    display: none;
+  }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 480px) {
+
+  .mainflow-sidebar {
+    height: 68px;
+  }
+
+
+  .sidebar-nav {
+    padding: 4px 6px;
+  }
+
+
+  .sidebar-nav .sidebar-item {
+    height: 60px;
+
+    gap: 3px;
+
+    font-size: 9px;
+  }
+
+
+  .sidebar-nav .sidebar-item svg {
+    width: 19px;
+    height: 19px;
+  }
+
+}
+
+
+/* =========================================
+   CELULARES PEQUENOS
+========================================= */
+
+@media (max-width: 380px) {
+
+  .mainflow-sidebar {
+    height: 64px;
+  }
+
+
+  .sidebar-nav {
+    padding: 3px 4px;
+  }
+
+
+  .sidebar-nav .sidebar-item {
+    height: 58px;
+
+    font-size: 8px;
+
+    gap: 2px;
+  }
+
+
+  .sidebar-nav .sidebar-item svg {
+    width: 18px;
+    height: 18px;
+  }
+
+}
