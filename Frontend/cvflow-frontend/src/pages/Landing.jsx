@@ -58,7 +58,7 @@ const Landing = () => {
       </nav>
       
       <div className='botoes-header'>
-        <button className='cadastro'>Começar grátis</button>
+        <button className='cadastro' onClick={() => navigate('/auth')}>Começar grátis</button>
       </div>
 
       {/* Mobile */}
@@ -130,7 +130,7 @@ const Landing = () => {
             </div>
 
             <div className="caixa-botoes">
-              <button className='b1-main' onClick={() => navigate('/flow')}>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
+              <button className='b1-main' onClick={() => navigate('/auth')}>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
               <button className='b2-main'>Ver exemplo</button>
             </div>
 
@@ -287,7 +287,7 @@ const Landing = () => {
             <p>Comece agora e dê o próximo passo rumo ao seu futuro.</p>
           </div>
           <div>
-            <button>Criar meu currículo grátis <ArrowRight/> </button>
+            <button onClick={() => navigate('/auth')}>Criar meu currículo grátis <ArrowRight/> </button>
           </div>
         </div>
         
