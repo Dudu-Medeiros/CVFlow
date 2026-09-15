@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Ambiente virtual
+venv/
+.venv/
+
+# Variáveis de ambiente
+.env
+
+# VS Code
+.vscode/
+
+# Frontend
+node_modules/
+dist/
