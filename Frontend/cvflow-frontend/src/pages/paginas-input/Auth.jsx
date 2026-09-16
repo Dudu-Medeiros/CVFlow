@@ -19,6 +19,41 @@ const Auth = () => {
   const [mostrarSenhaRegistro, setMostrarSenhaRegistro] = useState(false);
   const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
 
+  const [emailLogin, setEmailLogin] = useState("");
+  const [senhaLogin, setSenhaLogin] = useState("");
+  const [lembrarDeMim, setLembrarDeMim] = useState(false);
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const resposta = await fetch("http://127.0.0.1:5000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailLogin,
+        senha: senhaLogin,
+      }),
+    });
+
+    const dados = await resposta.json();
+
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+
+    if (lembrarDeMim) {
+      localStorage.setItem("token", dados.token);
+    } else {
+      sessionStorage.setItem("token", dados.token);
+    }
+
+  } catch (erro) {
+    console.error("Erro ao realizar login:", erro);
+  }
+  };
+
   const alternarModo = () => {
     setModo((modoAtual) =>
       modoAtual === "login" ? "registro" : "login"
@@ -51,7 +86,7 @@ const Auth = () => {
                 Acesse seu espaço e continue construindo seu próximo currículo.
               </p>
 
-              <form>
+              <form onSubmit={handleLogin}>
 
                 {/* E-MAIL */}
                 <div className="input-group">
@@ -60,6 +95,8 @@ const Auth = () => {
                   <input
                     type="email"
                     placeholder="Seu e-mail"
+                    value={emailLogin}
+                    onChange={(e) => setEmailLogin(e.target.value)}
                   />
                 </div>
 
@@ -70,6 +107,8 @@ const Auth = () => {
                   <input
                     type={mostrarSenhaLogin ? "text" : "password"}
                     placeholder="Sua senha"
+                    value={senhaLogin}
+                    onChange={(e) => setSenhaLogin(e.target.value)}
                   />
 
                   <button
@@ -95,7 +134,10 @@ const Auth = () => {
                 <div className="auth-options">
 
                   <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" 
+                    checked={lembrarDeMim}
+                    onChange={(e) => setLembrarDeMim(e.target.checked)}
+                  />
                     Lembrar de mim
                   </label>
 

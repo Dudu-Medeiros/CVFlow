@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from config import Config
 from extensions import db
@@ -6,6 +7,7 @@ from extensions import db
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(Config)
 
     db.init_app(app)
