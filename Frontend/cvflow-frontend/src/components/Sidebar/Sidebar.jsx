@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 import "./Sidebar.css";
 
@@ -15,6 +16,7 @@ import logo from "../../assets/logo-cvflow-sem-fundo.png";
 const Sidebar = () => {
 
   const navigate = useNavigate();
+  const { usuario, logout } = useAuth();
 
   return (
     <aside className="mainflow-sidebar">
@@ -65,7 +67,10 @@ const Sidebar = () => {
 
       <div className="sidebar-bottom">
 
-        <button className="sidebar-item logout">
+        <button 
+          className="sidebar-item logout"
+          onClick={logout}
+        >
           <LogOut size={19} />
           <span>Sair</span>
         </button>
@@ -77,7 +82,7 @@ const Sidebar = () => {
           </div>
 
           <div className="user-info">
-            <strong>Eduardo</strong>
+            <strong>{usuario?.nome || "Usuário"}</strong>
             <span>Minha conta</span>
           </div>
 
