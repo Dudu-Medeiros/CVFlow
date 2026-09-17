@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+
 import {
   Mail,
   Lock,
@@ -13,8 +16,9 @@ import logo from "../../assets/logo-cvflow-sem-fundo.png";
 
 const Auth = () => {
   const [modo, setModo] = useState("login");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
-  // Controle de visibilidade das senhas
   const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false);
   const [mostrarSenhaRegistro, setMostrarSenhaRegistro] = useState(false);
   const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
@@ -23,59 +27,157 @@ const Auth = () => {
   const [senhaLogin, setSenhaLogin] = useState("");
   const [lembrarDeMim, setLembrarDeMim] = useState(false);
 
-const handleLogin = async (e) => {
-  e.preventDefault();
+  const [erroLogin, setErroLogin] = useState("");
+  const [carregandoLogin, setCarregandoLogin] = useState(false);
 
-  try {
-    const resposta = await fetch("http://127.0.0.1:5000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailLogin,
-        senha: senhaLogin,
-      }),
-    });
+  const [nomeRegistro, setNomeRegistro] = useState("");
+  const [emailRegistro, setEmailRegistro] = useState("");
+  const [senhaRegistro, setSenhaRegistro] = useState("");
+  const [confirmarSenhaRegistro, setConfirmarSenhaRegistro] = useState("");
 
-    const dados = await resposta.json();
+  const [erroRegistro, setErroRegistro] = useState("");
+  const [carregandoRegistro, setCarregandoRegistro] = useState(false);
+  const [mensagemRegistro, setMensagemRegistro] = useState("");
 
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    if (lembrarDeMim) {
-      localStorage.setItem("token", dados.token);
-    } else {
-      sessionStorage.setItem("token", dados.token);
+    setErroLogin("");
+    setCarregandoLogin(true);
+
+    if (!emailLogin || !senhaLogin) {
+      setErroLogin("Preencha todos os campos.");
+      setCarregandoLogin(false);
+      return;
     }
 
-  } catch (erro) {
-    console.error("Erro ao realizar login:", erro);
-  }
+    try {
+      const resposta = await fetch("http://127.0.0.1:5000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailLogin,
+          senha: senhaLogin,
+        }),
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        setErroLogin(dados.erro || "Erro ao realizar login.");
+        return;
+      }
+
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+
+      if (lembrarDeMim) {
+        localStorage.setItem("token", dados.token);
+      } else {
+        sessionStorage.setItem("token", dados.token);
+      }
+
+      login(dados.usuario);
+      navigate("/flow");
+    } catch (erro) {
+      console.error("Erro ao realizar login:", erro);
+      setErroLogin("Não foi possível conectar ao servidor.");
+    } finally {
+      setCarregandoLogin(false);
+    }
+  };
+
+  const handleRegistro = async (e) => {
+    e.preventDefault();
+
+    setErroRegistro("");
+    setMensagemRegistro("");
+    setCarregandoRegistro(true);
+
+    if (
+      !nomeRegistro ||
+      !emailRegistro ||
+      !senhaRegistro ||
+      !confirmarSenhaRegistro
+    ) {
+      setErroRegistro("Preencha todos os campos.");
+      setCarregandoRegistro(false);
+      return;
+    }
+
+    if (senhaRegistro !== confirmarSenhaRegistro) {
+      setErroRegistro("As senhas não coincidem.");
+      setCarregandoRegistro(false);
+      return;
+    }
+
+    if (senhaRegistro.length < 6) {
+      setErroRegistro("A senha deve possuir pelo menos 6 caracteres.");
+      setCarregandoRegistro(false);
+      return;
+    }
+
+    try {
+      const resposta = await fetch("http://127.0.0.1:5000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome: nomeRegistro.trim(),
+          email: emailRegistro.trim(),
+          senha: senhaRegistro,
+        }),
+      });
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        setErroRegistro(dados.erro || "Erro ao realizar cadastro.");
+        return;
+      }
+
+      setNomeRegistro("");
+      setEmailRegistro("");
+      setSenhaRegistro("");
+      setConfirmarSenhaRegistro("");
+
+      setEmailLogin(emailRegistro);
+      setMensagemRegistro(
+        "Conta criada com sucesso! Agora faça login para continuar."
+      );
+
+      setModo("login");
+    } catch (erro) {
+      console.error("Erro ao realizar cadastro:", erro);
+      setErroRegistro("Não foi possível conectar ao servidor.");
+    } finally {
+      setCarregandoRegistro(false);
+    }
   };
 
   const alternarModo = () => {
     setModo((modoAtual) =>
       modoAtual === "login" ? "registro" : "login"
     );
+
+    setErroLogin("");
+    setErroRegistro("");
+    setMensagemRegistro("");
   };
 
   return (
     <main className={`auth-container ${modo}`}>
       <div className="auth-box">
-
         <div className="auth-forms">
-
-          {/* LOGO */}
           <div className="auth-logo">
             <img src={logo} alt="CVFlow" />
           </div>
 
-          {/* ================= LOGIN ================= */}
-
           <div className="auth-form login-form">
             <div className="auth-content">
-
               <span className="auth-badge">
                 Bem-vindo de volta
               </span>
@@ -87,8 +189,6 @@ const handleLogin = async (e) => {
               </p>
 
               <form onSubmit={handleLogin}>
-
-                {/* E-MAIL */}
                 <div className="input-group">
                   <Mail size={18} />
 
@@ -100,7 +200,6 @@ const handleLogin = async (e) => {
                   />
                 </div>
 
-                {/* SENHA */}
                 <div className="input-group password-group">
                   <Lock size={18} />
 
@@ -132,33 +231,46 @@ const handleLogin = async (e) => {
                 </div>
 
                 <div className="auth-options">
-
                   <label>
-                    <input type="checkbox" 
-                    checked={lembrarDeMim}
-                    onChange={(e) => setLembrarDeMim(e.target.checked)}
-                  />
+                    <input
+                      type="checkbox"
+                      checked={lembrarDeMim}
+                      onChange={(e) =>
+                        setLembrarDeMim(e.target.checked)
+                      }
+                    />
                     Lembrar de mim
                   </label>
 
                   <a href="#">
                     Esqueci minha senha
                   </a>
-
                 </div>
+
+                {mensagemRegistro && (
+                  <p className="auth-success" role="status">
+                    {mensagemRegistro}
+                  </p>
+                )}
+
+                {erroLogin && (
+                  <p className="auth-error" role="alert">
+                    {erroLogin}
+                  </p>
+                )}
 
                 <button
                   className="auth-button"
                   type="submit"
+                  disabled={carregandoLogin}
+                  aria-busy={carregandoLogin}
                 >
-                  Entrar
-                  <ArrowRight size={18} />
+                  {carregandoLogin ? "Entrando..." : "Entrar"}
+                  {!carregandoLogin && <ArrowRight size={18} />}
                 </button>
-
               </form>
 
               <div className="auth-switch">
-
                 <span>
                   Ainda não possui uma conta?
                 </span>
@@ -169,17 +281,12 @@ const handleLogin = async (e) => {
                 >
                   Criar conta
                 </button>
-
               </div>
-
             </div>
           </div>
 
-          {/* ================= REGISTRO ================= */}
-
           <div className="auth-form registro-form">
             <div className="auth-content">
-
               <span className="auth-badge">
                 Comece agora
               </span>
@@ -190,29 +297,33 @@ const handleLogin = async (e) => {
                 Preencha seus dados e comece a criar currículos profissionais.
               </p>
 
-              <form>
-
-                {/* NOME */}
+              <form onSubmit={handleRegistro}>
                 <div className="input-group">
                   <User size={18} />
 
                   <input
                     type="text"
                     placeholder="Nome completo"
+                    value={nomeRegistro}
+                    onChange={(e) =>
+                      setNomeRegistro(e.target.value)
+                    }
                   />
                 </div>
 
-                {/* E-MAIL */}
                 <div className="input-group">
                   <Mail size={18} />
 
                   <input
                     type="email"
                     placeholder="Seu e-mail"
+                    value={emailRegistro}
+                    onChange={(e) =>
+                      setEmailRegistro(e.target.value)
+                    }
                   />
                 </div>
 
-                {/* CRIAR SENHA */}
                 <div className="input-group password-group">
                   <Lock size={18} />
 
@@ -223,6 +334,10 @@ const handleLogin = async (e) => {
                         : "password"
                     }
                     placeholder="Crie uma senha"
+                    value={senhaRegistro}
+                    onChange={(e) =>
+                      setSenhaRegistro(e.target.value)
+                    }
                   />
 
                   <button
@@ -247,7 +362,6 @@ const handleLogin = async (e) => {
                   </button>
                 </div>
 
-                {/* CONFIRMAR SENHA */}
                 <div className="input-group password-group">
                   <Lock size={18} />
 
@@ -258,6 +372,10 @@ const handleLogin = async (e) => {
                         : "password"
                     }
                     placeholder="Confirme sua senha"
+                    value={confirmarSenhaRegistro}
+                    onChange={(e) =>
+                      setConfirmarSenhaRegistro(e.target.value)
+                    }
                   />
 
                   <button
@@ -282,18 +400,29 @@ const handleLogin = async (e) => {
                   </button>
                 </div>
 
+                {erroRegistro && (
+                  <p className="auth-error" role="alert">
+                    {erroRegistro}
+                  </p>
+                )}
+
                 <button
                   className="auth-button"
                   type="submit"
+                  disabled={carregandoRegistro}
+                  aria-busy={carregandoRegistro}
                 >
-                  Criar minha conta
-                  <ArrowRight size={18} />
-                </button>
+                  {carregandoRegistro
+                    ? "Criando conta..."
+                    : "Criar minha conta"}
 
+                  {!carregandoRegistro && (
+                    <ArrowRight size={18} />
+                  )}
+                </button>
               </form>
 
               <div className="auth-switch">
-
                 <span>
                   Já possui uma conta?
                 </span>
@@ -304,25 +433,18 @@ const handleLogin = async (e) => {
                 >
                   Entrar
                 </button>
-
               </div>
-
             </div>
           </div>
-
         </div>
 
-        {/* ================= LADO AZUL ================= */}
-
         <div className="auth-right">
-
           <div className="auth-decoration">
             <div className="decoration-circle"></div>
             <div className="decoration-circle small"></div>
           </div>
 
           <div className="auth-message login-message">
-
             <span>CVFlow</span>
 
             <h2>
@@ -334,11 +456,9 @@ const handleLogin = async (e) => {
             <p>
               Crie, personalize e conquiste novas oportunidades profissionais.
             </p>
-
           </div>
 
           <div className="auth-message registro-message">
-
             <span>CVFlow</span>
 
             <h2>
@@ -350,11 +470,8 @@ const handleLogin = async (e) => {
             <p>
               Transforme suas experiências em um currículo que representa você.
             </p>
-
           </div>
-
         </div>
-
       </div>
     </main>
   );

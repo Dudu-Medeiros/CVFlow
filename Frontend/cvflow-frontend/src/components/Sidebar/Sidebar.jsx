@@ -5,31 +5,33 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
 import "./Sidebar.css";
-
 import logo from "../../assets/logo-cvflow-sem-fundo.png";
 
 const Sidebar = () => {
-
   const navigate = useNavigate();
   const { usuario, logout } = useAuth();
 
+  const nomeCompleto = usuario?.nome?.trim() || "Usuário";
+  const partesNome = nomeCompleto.split(/\s+/);
+
+  const nomeExibicao =
+    partesNome.length > 1
+      ? `${partesNome[0]} ${partesNome[partesNome.length - 1]}`
+      : partesNome[0];
+
+  const inicial = nomeCompleto.charAt(0).toUpperCase();
+
   return (
     <aside className="mainflow-sidebar">
-
       <div className="sidebar-logo">
         <img src={logo} alt="CVFlow" />
       </div>
 
       <nav className="sidebar-nav">
-
-        <span className="nav-title">
-          MENU
-        </span>
+        <span className="nav-title">MENU</span>
 
         <button
           className="sidebar-item"
@@ -47,8 +49,10 @@ const Sidebar = () => {
           <span>Meus currículos</span>
         </button>
 
-        <button className="sidebar-item"
-         onClick={() => navigate("/perfil")}>
+        <button
+          className="sidebar-item"
+          onClick={() => navigate("/perfil")}
+        >
           <UserRound size={19} />
           <span>Meu perfil</span>
         </button>
@@ -57,17 +61,17 @@ const Sidebar = () => {
           CONFIGURAÇÕES
         </span>
 
-        <button className="sidebar-item"
-         onClick={() => navigate("/configuracoes")}>
+        <button
+          className="sidebar-item"
+          onClick={() => navigate("/configuracoes")}
+        >
           <Settings size={19} />
           <span>Configurações</span>
         </button>
-
       </nav>
 
       <div className="sidebar-bottom">
-
-        <button 
+        <button
           className="sidebar-item logout"
           onClick={logout}
         >
@@ -76,20 +80,19 @@ const Sidebar = () => {
         </button>
 
         <div className="sidebar-user">
-
           <div className="user-avatar">
-            E
+            {inicial}
           </div>
 
           <div className="user-info">
-            <strong>{usuario?.nome || "Usuário"}</strong>
+            <strong title={nomeExibicao}>
+              {nomeExibicao}
+            </strong>
+
             <span>Minha conta</span>
           </div>
-
         </div>
-
       </div>
-
     </aside>
   );
 };

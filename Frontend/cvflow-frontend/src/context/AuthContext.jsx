@@ -8,10 +8,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { getUser } from "../utils/user";
 
-// Criação do contexto
 const AuthContext = createContext(null);
 
-// Componente responsável por fornecer os dados
 const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState(null);
     const [carregando, setCarregando] = useState(true);
@@ -35,6 +33,10 @@ const AuthProvider = ({ children }) => {
         verificarUsuario();
     }, []);
 
+    const login = (dadosUsuario) => {
+        setUsuario(dadosUsuario);
+    };
+
     const logout = () => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
@@ -52,6 +54,7 @@ const AuthProvider = ({ children }) => {
                 usuario,
                 autenticado,
                 carregando,
+                login,
                 logout,
             }}
         >
