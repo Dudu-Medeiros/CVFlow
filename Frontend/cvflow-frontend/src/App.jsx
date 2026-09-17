@@ -3,28 +3,28 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import MainFlow from "./pages/mainFlow/MainFlow";
 import Auth from "./pages/paginas-input/Auth";
-import CurriculoMain from "./pages/mainFlow/CurriculoMain"
+import CurriculoMain from "./pages/mainFlow/CurriculoMain";
 import Profile from "./pages/mainFlow/Profile";
 import Configs from "./pages/mainFlow/Configs";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import "./App.css";
 
-import './App.css'
-
 function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/auth" element={<Auth />} />
 
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/flow" element={<MainFlow />} />
-        <Route path="/curriculos" element={<CurriculoMain />} />
-        <Route path="/perfil" element={<Profile />} />
-        <Route path="/configuracoes" element={<Configs />} />
-        <Route path='/auth' element={<Auth/>}/>
-      </Routes>
-    </>
-  )
+            <Route element={<ProtectedRoute />}>
+                <Route path="/flow" element={<MainFlow />} />
+                <Route path="/curriculos" element={<CurriculoMain />} />
+                <Route path="/perfil" element={<Profile />} />
+                <Route path="/configuracoes" element={<Configs />} />
+            </Route>
+        </Routes>
+    );
 }
 
-export default App
+export default App;
