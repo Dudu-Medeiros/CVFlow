@@ -1,0 +1,484 @@
+.modelos-page {
+    min-height: 100vh;
+    padding: 0 7%;
+    background: #f8fafc;
+    color: #2f3b4b;
+}
+
+.modelos-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 86px;
+}
+
+.modelos-logo img {
+    display: block;
+    max-width: 100px;
+    height: auto;
+}
+
+.voltar-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.voltar-link:hover {
+    color: #2563eb;
+}
+
+.modelos-hero {
+    max-width: 680px;
+    margin: 70px auto 48px;
+    text-align: center;
+}
+
+.modelos-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid #dbeafe;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.modelos-hero h1 {
+    margin: 20px 0 16px;
+    color: #1e293b;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.4px;
+    line-height: 1.15;
+}
+
+.modelos-hero p {
+    max-width: 570px;
+    margin: 0 auto;
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.modelos-lista {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.modelo-card {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modelo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.09);
+}
+
+.modelo-preview-container {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 340px;
+    padding: 34px 20px 20px;
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.modelo-categoria {
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    z-index: 2;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.modelo-imagem {
+    display: block;
+    width: 100%;
+    max-width: 255px;
+    height: 300px;
+    object-fit: contain;
+    object-position: top center;
+    background: #ffffff;
+    box-shadow: 0 7px 18px rgba(15, 23, 42, 0.1);
+    transform: scale(0.98);
+    transition: transform 0.25s ease;
+}
+
+.modelo-card:hover .modelo-imagem {
+    transform: scale(1);
+}
+
+/* Informações dos cards */
+
+.modelo-informacoes {
+    display: flex;
+    flex-direction: column;
+    padding: 23px;
+}
+
+.modelo-informacoes h2 {
+    margin: 0 0 9px;
+    color: #1e293b;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.modelo-informacoes p {
+    min-height: 48px;
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.modelo-acoes {
+    display: flex;
+    gap: 9px;
+    margin-top: 22px;
+}
+
+.botao-visualizar,
+.botao-selecionar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.botao-visualizar {
+    border: 1px solid #dbe3ed;
+    background: #ffffff;
+    color: #475569;
+}
+
+.botao-visualizar:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.botao-selecionar {
+    flex: 1;
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.botao-selecionar:hover {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+.botao-selecionar:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Benefícios */
+
+.modelos-beneficios {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 45px 0;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modelos-beneficios div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.modelos-beneficios svg {
+    color: #059669;
+}
+
+/* Modal de visualização */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    animation: aparecer-modal 0.2s ease;
+}
+
+.modelo-modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 570px;
+    max-height: 90vh;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.2);
+    animation: subir-modal 0.25s ease;
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e2e8f0;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-fechar:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.modal-cabecalho {
+    padding: 28px 30px 20px;
+}
+
+.modal-categoria {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.modal-cabecalho h2 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.modal-preview {
+    display: flex;
+    justify-content: center;
+    max-height: 53vh;
+    padding: 0 30px 25px;
+    overflow-y: auto;
+    background: #f1f5f9;
+}
+
+.modal-preview img {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
+}
+
+.modal-informacoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 30px 28px;
+}
+
+.modal-informacoes p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.modal-usar-modelo {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px solid #2563eb;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.modal-usar-modelo:hover {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+.modal-usar-modelo:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Animações */
+
+@keyframes aparecer-modal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes subir-modal {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+
+@media (max-width: 1050px) {
+    .modelos-page {
+        padding: 0 4%;
+    }
+
+    .modelos-lista {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 680px) {
+    .modelos-header {
+        display: flex;
+        justify-content: space-between;
+        height: 72px;
+    }
+
+    .modelos-logo img {
+        width: 80px;
+    }
+
+    .modelos-hero {
+        margin: 45px auto 35px;
+    }
+
+    .modelos-hero h1 {
+        font-size: 30px;
+    }
+
+    .modelos-hero p {
+        font-size: 14px;
+    }
+
+    .modelos-lista {
+        grid-template-columns: 1fr;
+        max-width: 390px;
+    }
+
+    .modelo-preview-container {
+        min-height: 360px;
+        padding: 34px 20px 20px;
+    }
+
+    .modelo-imagem {
+        max-width: 280px;
+        height: 330px;
+    }
+
+    .modelo-acoes {
+        flex-direction: column;
+    }
+
+    .botao-visualizar,
+    .botao-selecionar {
+        width: 100%;
+    }
+
+    .modelos-beneficios {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        padding: 35px 0;
+    }
+
+    .modal-overlay {
+        padding: 15px;
+    }
+
+    .modelo-modal {
+        max-height: 92vh;
+        border-radius: 16px;
+    }
+
+    .modal-cabecalho {
+        padding: 23px 20px 17px;
+    }
+
+    .modal-cabecalho h2 {
+        font-size: 22px;
+    }
+
+    .modal-preview {
+        padding: 0 20px 20px;
+    }
+
+    .modal-informacoes {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .modal-usar-modelo {
+        width: 100%;
+    }
+}

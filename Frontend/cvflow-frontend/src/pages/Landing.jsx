@@ -131,7 +131,7 @@ const Landing = () => {
 
             <div className="caixa-botoes">
               <button className='b1-main' onClick={() => navigate('/auth')}>Criar meu curriculo grátis <ArrowRight size={26} className='arrow'/></button>
-              <button className='b2-main'>Ver exemplo</button>
+              <button className='b2-main' onClick={() => navigate('/modelos')}>Ver exemplo</button>
             </div>
 
             <div className="area-tempo">

@@ -1,0 +1,966 @@
+.preview-curriculo {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background: #ffffff;
+  color: #334155;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.preview-curriculo *,
+.preview-curriculo *::before,
+.preview-curriculo *::after {
+  box-sizing: border-box;
+}
+
+.curriculo-layout {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.curriculo-cabecalho {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.curriculo-cabecalho h1 {
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.curriculo-cargo {
+  margin: 8px 0 0;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.curriculo-contatos,
+.curriculo-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 14px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.curriculo-contatos span,
+.curriculo-links span {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.curriculo-links {
+  word-break: break-word;
+}
+
+.curriculo-secao {
+  width: 100%;
+  min-width: 0;
+  margin-top: 32px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.curriculo-secao:first-child {
+  margin-top: 0;
+}
+
+.curriculo-secao > h2 {
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #cbd5e1;
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.curriculo-secao p {
+  margin: 8px 0 0;
+  color: #475569;
+  font-size: 10.5px;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.curriculo-secao h3 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.item-cabecalho,
+.formacao-item,
+.curso-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 26px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.item-identificacao {
+  min-width: 0;
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+
+.item-subtitulo {
+  color: #64748b !important;
+  font-size: 10px !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.item-periodo {
+  width: 34%;
+  max-width: 34%;
+  min-width: 0;
+  flex-shrink: 0;
+  margin: 0 !important;
+  color: #64748b !important;
+  font-size: 9.5px !important;
+  line-height: 1.5 !important;
+  text-align: right;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.experiencia-item,
+.formacao-item,
+.projeto-item,
+.curso-item {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-bottom: 25px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.experiencia-item:last-child,
+.formacao-item:last-child,
+.projeto-item:last-child,
+.curso-item:last-child {
+  margin-bottom: 0;
+}
+
+.projeto-item h3 {
+  margin-bottom: 7px;
+}
+
+.item-tecnologias {
+  color: #64748b !important;
+  font-size: 9.8px !important;
+}
+
+.item-link {
+  color: #2563eb !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.habilidades-lista,
+.idiomas-lista {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.habilidades-lista span,
+.idiomas-lista span {
+  max-width: 100%;
+  color: #475569;
+  font-size: 10.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ATS */
+
+.ats-medida {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: -100000px;
+  display: block;
+  width: 100%;
+  max-width: 210mm;
+  height: auto;
+  padding: 42px 44px;
+  overflow: visible;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.ats-medida [data-medida-bloco] {
+  display: flow-root;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ats-medida [data-medida-bloco] .curriculo-secao {
+  margin-top: 30px;
+}
+
+.ats-medida [data-medida-bloco].primeiro .curriculo-secao {
+  margin-top: 0;
+}
+
+.ats-paginas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ats-folha {
+  display: block;
+  width: 100%;
+  max-width: 210mm;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 210 / 297;
+  padding: 42px 44px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.08);
+  break-after: page;
+  page-break-after: always;
+}
+
+.ats-folha:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.ats-header {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.ats-header h1 {
+  max-width: 100%;
+  color: #172033;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.ats-header .curriculo-cargo {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.ats-header .curriculo-contatos,
+.ats-header .curriculo-links {
+  justify-content: center;
+  margin-top: 12px;
+  color: #64748b;
+  font-size: 9.8px;
+  line-height: 1.6;
+}
+
+.ats-header .curriculo-links {
+  color: #2563eb;
+}
+
+.ats-conteudo {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ats-conteudo > .ats-bloco {
+  display: flow-root;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ats-conteudo .curriculo-secao {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.ats-conteudo > .ats-bloco.primeiro .curriculo-secao {
+  margin-top: 0;
+}
+
+.ats-conteudo .curriculo-secao > h2 {
+  border-bottom: 1px solid #cbd5e1;
+}
+
+/* Moderno */
+
+.curriculo-moderno {
+  display: grid;
+  grid-template-columns: 35% minmax(0, 65%);
+  align-items: stretch;
+  min-height: 100%;
+  max-width: 100%;
+}
+
+.moderno-sidebar {
+  min-width: 0;
+  max-width: 100%;
+  padding: 42px 25px;
+  overflow-wrap: anywhere;
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.moderno-sidebar h1 {
+  margin: 0;
+  max-width: 100%;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.moderno-cargo {
+  margin: 10px 0 0;
+  color: #cbd5e1;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.moderno-foto-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.moderno-foto {
+  display: block;
+  width: 112px;
+  height: 112px;
+  max-width: 100%;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.moderno-contatos {
+  margin-top: 32px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.moderno-contatos h2 {
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #64748b;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.moderno-contatos p {
+  margin: 8px 0 0;
+  color: #cbd5e1;
+  font-size: 9.5px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.moderno-sidebar .curriculo-secao {
+  margin-top: 32px;
+}
+
+.moderno-sidebar .curriculo-secao > h2 {
+  border-color: #64748b;
+  color: #ffffff;
+}
+
+.moderno-sidebar .habilidades-lista span,
+.moderno-sidebar .idiomas-lista span {
+  color: #cbd5e1;
+  font-size: 9.8px;
+}
+
+.moderno-conteudo {
+  min-width: 0;
+  max-width: 100%;
+  padding: 42px 32px;
+  background: #ffffff;
+}
+
+.moderno-conteudo .curriculo-secao {
+  margin-top: 34px;
+}
+
+.moderno-conteudo .curriculo-secao:first-child {
+  margin-top: 0;
+}
+
+/* Executivo */
+
+.curriculo-executivo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 46px 44px;
+  overflow-wrap: anywhere;
+  background: #ffffff;
+  color: #334155;
+}
+
+.executivo-header {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+}
+
+.executivo-header h1 {
+  max-width: 100%;
+  margin: 0 0 9px;
+  color: #172033;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.executivo-header .curriculo-cargo {
+  margin: 0 0 17px;
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.executivo-header .curriculo-contatos {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+  color: #64748b;
+  font-size: 9.8px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.executivo-header .curriculo-links {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+  width: 100%;
+  max-width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+  color: #2563eb;
+  font-size: 9.8px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.executivo-conteudo {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding-top: 60px;
+}
+
+.executivo-conteudo .curriculo-secao {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 30px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.executivo-conteudo .curriculo-secao:first-child {
+  margin-top: 0;
+}
+
+.executivo-conteudo .curriculo-secao > h2 {
+  position: relative;
+  margin: 0 0 14px;
+  padding: 0 0 8px;
+  border: none;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.executivo-conteudo .curriculo-secao > h2::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 8px;
+  background: #d4af37;
+}
+
+.executivo-conteudo .curriculo-secao p {
+  color: #475569;
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+
+.executivo-conteudo .item-titulo,
+.executivo-conteudo .curriculo-secao h3 {
+  color: #1e293b;
+  font-size: 10.8px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.executivo-conteudo .item-subtitulo {
+  color: #64748b !important;
+  font-size: 10px !important;
+}
+
+.executivo-conteudo .item-periodo {
+  width: 34%;
+  max-width: 34%;
+  min-width: 0;
+  flex-shrink: 0;
+  color: #64748b !important;
+  font-size: 9.8px !important;
+  text-align: right;
+}
+
+.executivo-conteudo .item-cabecalho,
+.executivo-conteudo .formacao-item,
+.executivo-conteudo .curso-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 26px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.executivo-conteudo .experiencia-item,
+.executivo-conteudo .formacao-item,
+.executivo-conteudo .projeto-item,
+.executivo-conteudo .curso-item {
+  margin-bottom: 26px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.executivo-conteudo .experiencia-item:last-child,
+.executivo-conteudo .formacao-item:last-child,
+.executivo-conteudo .projeto-item:last-child,
+.executivo-conteudo .curso-item:last-child {
+  margin-bottom: 0;
+}
+
+.executivo-conteudo .habilidades-lista,
+.executivo-conteudo .idiomas-lista {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.executivo-conteudo .habilidades-lista span,
+.executivo-conteudo .idiomas-lista span {
+  max-width: 100%;
+  color: #475569;
+  font-size: 10.5px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Responsividade intermediária */
+
+@media (max-width: 850px) {
+  .ats-folha {
+    width: 100%;
+    max-width: 100%;
+    padding: 32px;
+  }
+
+  .ats-medida {
+    width: 100%;
+    max-width: 100%;
+    padding: 32px;
+  }
+
+  .curriculo-executivo {
+    padding: 36px 32px;
+  }
+
+  .moderno-conteudo {
+    padding: 32px 25px;
+  }
+
+  .moderno-sidebar {
+    padding: 32px 20px;
+  }
+
+  .item-cabecalho,
+  .formacao-item,
+  .curso-item {
+    gap: 18px;
+  }
+
+  .item-periodo {
+    width: 32%;
+    max-width: 32%;
+  }
+
+  .executivo-conteudo .item-cabecalho,
+  .executivo-conteudo .formacao-item,
+  .executivo-conteudo .curso-item {
+    gap: 18px;
+  }
+
+  .executivo-conteudo .item-periodo {
+    width: 32%;
+    max-width: 32%;
+  }
+}
+
+/* Responsividade para celulares */
+
+@media (max-width: 700px) {
+  .preview-curriculo {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .curriculo-moderno {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .moderno-sidebar {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 25px;
+  }
+
+  .moderno-conteudo {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 25px;
+  }
+
+  .moderno-sidebar h1 {
+    font-size: 22px;
+  }
+
+  .moderno-cargo {
+    font-size: 11px;
+  }
+
+  .moderno-contatos {
+    margin-top: 28px;
+  }
+
+  .item-cabecalho,
+  .formacao-item,
+  .curso-item,
+  .executivo-conteudo .item-cabecalho,
+  .executivo-conteudo .formacao-item,
+  .executivo-conteudo .curso-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
+
+  .item-identificacao {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .item-periodo,
+  .executivo-conteudo .item-periodo {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .curriculo-secao {
+    margin-top: 28px;
+  }
+
+  .curriculo-secao > h2 {
+    font-size: 11px;
+  }
+
+  .curriculo-secao p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .curriculo-secao h3 {
+    font-size: 10.8px;
+  }
+
+  /* ATS no celular */
+
+  .ats-paginas {
+    width: 100%;
+    max-width: 100%;
+    gap: 16px;
+  }
+
+  .ats-medida {
+    width: 100%;
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .ats-folha {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: auto;
+    padding: 25px;
+    overflow: visible;
+  }
+
+  .ats-header {
+    margin-bottom: 45px;
+  }
+
+  .ats-header h1 {
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .ats-header .curriculo-cargo {
+    font-size: 11px;
+  }
+
+  .ats-header .curriculo-contatos,
+  .ats-header .curriculo-links {
+    justify-content: center;
+    gap: 5px 10px;
+    font-size: 9px;
+    line-height: 1.6;
+  }
+
+  .ats-conteudo {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ats-conteudo .curriculo-secao {
+    margin-top: 26px;
+  }
+
+  .ats-conteudo > .ats-bloco.primeiro .curriculo-secao {
+    margin-top: 0;
+  }
+
+  .ats-conteudo .curriculo-secao > h2 {
+    margin-bottom: 14px;
+  }
+
+  /* Executivo no celular */
+
+  .curriculo-executivo {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 25px;
+  }
+
+  .executivo-header {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .executivo-header h1 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .executivo-header .curriculo-cargo {
+    margin-bottom: 15px;
+    font-size: 11px;
+  }
+
+  .executivo-header .curriculo-contatos,
+  .executivo-header .curriculo-links {
+    justify-content: flex-start;
+    gap: 5px 10px;
+    font-size: 9px;
+    line-height: 1.6;
+  }
+
+  .executivo-conteudo {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 42px;
+  }
+
+  .executivo-conteudo .curriculo-secao {
+    margin-top: 28px;
+  }
+
+  .executivo-conteudo .curriculo-secao:first-child {
+    margin-top: 0;
+  }
+
+  .executivo-conteudo .curriculo-secao > h2 {
+    margin-bottom: 14px;
+    font-size: 11px;
+  }
+
+  .executivo-conteudo .curriculo-secao p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .executivo-conteudo .curriculo-secao h3 {
+    font-size: 10.8px;
+  }
+
+  .executivo-conteudo .item-periodo {
+    font-size: 9.5px !important;
+  }
+
+  .executivo-conteudo .experiencia-item,
+  .executivo-conteudo .formacao-item,
+  .executivo-conteudo .projeto-item,
+  .executivo-conteudo .curso-item {
+    margin-bottom: 23px;
+  }
+}
+
+/* Celulares pequenos */
+
+@media (max-width: 420px) {
+  .moderno-sidebar,
+  .moderno-conteudo,
+  .curriculo-executivo,
+  .ats-folha,
+  .ats-medida {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .moderno-sidebar h1 {
+    font-size: 20px;
+  }
+
+  .executivo-header h1 {
+    font-size: 22px;
+  }
+
+  .ats-header h1 {
+    font-size: 21px;
+  }
+
+  .ats-header {
+    margin-bottom: 38px;
+  }
+
+  .curriculo-secao > h2 {
+    font-size: 10.5px;
+    letter-spacing: 0.35px;
+  }
+
+  .curriculo-secao p {
+    font-size: 9.8px;
+  }
+
+  .habilidades-lista span,
+  .idiomas-lista span {
+    font-size: 10px;
+  }
+}
+
+/* Impressão */
+
+@media print {
+  .ats-medida {
+    display: none;
+  }
+
+  .ats-paginas {
+    display: block;
+  }
+
+  .ats-folha {
+    width: 210mm;
+    max-width: none;
+    min-height: 297mm;
+    height: 297mm;
+    margin: 0;
+    padding: 15mm;
+    overflow: hidden;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .ats-folha:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
