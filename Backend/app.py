@@ -13,7 +13,17 @@ def create_app():
     db.init_app(app)
 
     from routes.auth import auth_bp
-    app.register_blueprint(auth_bp, url_prefix="/auth")
+    from routes.curriculos import curriculos_bp
+
+    app.register_blueprint(
+        auth_bp,
+        url_prefix="/auth"
+    )
+
+    app.register_blueprint(
+        curriculos_bp,
+        url_prefix="/curriculos"
+    )
 
     @app.route("/")
     def home():
@@ -23,7 +33,9 @@ def create_app():
     def db_test():
         try:
             db.session.execute(db.text("SELECT 1"))
+
             return "Conexão com PostgreSQL funcionando!"
+
         except Exception as error:
             return f"Erro na conexão: {error}", 500
 
@@ -33,6 +45,7 @@ def create_app():
 app = create_app()
 
 from models.user import User
+from models.curriculo import Curriculo
 
 with app.app_context():
     db.create_all()
