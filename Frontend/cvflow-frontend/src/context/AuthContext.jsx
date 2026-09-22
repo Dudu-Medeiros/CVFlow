@@ -37,6 +37,10 @@ const AuthProvider = ({ children }) => {
         setUsuario(dadosUsuario);
     };
 
+    const atualizarUsuario = (dadosAtualizados) => {
+        setUsuario(dadosAtualizados);
+    };
+
     const logout = () => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
@@ -56,6 +60,7 @@ const AuthProvider = ({ children }) => {
                 carregando,
                 login,
                 logout,
+                atualizarUsuario,
             }}
         >
             {children}

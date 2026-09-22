@@ -129,3 +129,106 @@ def me(user_id):
             "email": usuario.email
         }
     }), 200
+
+# Atualização dos dados do perfil
+
+@auth_bp.route("/profile", methods=["PUT"])
+@token_required
+def update_profile(user_id):
+    try:
+        data = request.get_json() or {}
+
+        print("[PROFILE] Dados recebidos:", data)
+        print("[PROFILE] ID do usuário:", user_id)
+
+        nome = data.get("nome", "").strip()
+        email = data.get("email", "").strip().lower()
+
+        if not nome or not email:
+            return jsonify({
+                "erro": "Nome e email são obrigatórios."
+            }), 400
+
+        usuario = db.session.get(User, user_id)
+
+        if not usuario:
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
+
+        email_existente = User.query.filter(
+            User.email == email,
+            User.id != user_id
+        ).first()
+
+        if email_existente:
+            return jsonify({
+                "erro": "Este email já está sendo utilizado."
+            }), 409
+
+        print(
+            "[PROFILE] Dados antigos:",
+            usuario.nome,
+            usuario.email
+        )
+
+        usuario.nome = nome
+        usuario.email = email
+
+        db.session.commit()
+        db.session.refresh(usuario)
+
+        print(
+            "[PROFILE] Dados após commit:",
+            usuario.nome,
+            usuario.email
+        )
+
+        return jsonify({
+            "mensagem": "Perfil atualizado com sucesso!",
+            "usuario": {
+                "id": usuario.id,
+                "nome": usuario.nome,
+                "email": usuario.email
+            }
+        }), 200
+
+    except Exception as erro:
+        db.session.rollback()
+
+        print("[PROFILE ERROR]", repr(erro))
+
+        return jsonify({
+            "erro": "Não foi possível atualizar o perfil."
+        }), 500
+
+# Exclusão da conta
+
+@auth_bp.route("/profile", methods=["DELETE"])
+@token_required
+def delete_profile(user_id):
+    try:
+        usuario = db.session.get(User, user_id)
+
+        if not usuario:
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
+
+        db.session.delete(usuario)
+        db.session.commit()
+
+        print(f"[PROFILE] Usuário {user_id} excluído.")
+
+        return jsonify({
+            "mensagem": "Conta excluída com sucesso!"
+        }), 200
+
+    except Exception as erro:
+        db.session.rollback()
+
+        print("[PROFILE DELETE ERROR]", repr(erro))
+
+        return jsonify({
+            "erro": "Não foi possível excluir a conta."
+        }), 500

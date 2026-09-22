@@ -6,11 +6,62 @@ import {
   Save,
   ChevronRight,
   Star,
+  Trash2,
+  AlertTriangle,
+  X,
 } from "lucide-react";
+
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { getToken } from "../../utils/auth";
+
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Configs.css";
 
 const Configs = () => {
+  const { logout } = useAuth();
+
+  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
+  const [excluindo, setExcluindo] = useState(false);
+  const [erro, setErro] = useState("");
+
+  const excluirConta = async () => {
+    try {
+      setExcluindo(true);
+      setErro("");
+
+      const token = getToken();
+
+      const resposta = await fetch(
+        "http://127.0.0.1:5000/auth/profile",
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const dados = await resposta.json();
+
+      if (!resposta.ok) {
+        throw new Error(
+          dados.erro || "Não foi possível excluir a conta."
+        );
+      }
+
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+
+      logout();
+    } catch (error) {
+      console.error("Erro ao excluir conta:", error);
+      setErro(error.message);
+    } finally {
+      setExcluindo(false);
+    }
+  };
+
   return (
     <main className="configs-page">
       <Sidebar />
@@ -116,7 +167,10 @@ const Configs = () => {
             <ChevronRight size={18} />
           </button>
 
-          <button className="security-option danger">
+          <button
+            className="security-option danger"
+            onClick={logout}
+          >
             <div className="security-option-left">
               <div className="config-option-icon danger-icon">
                 <LogOut size={18} />
@@ -125,6 +179,24 @@ const Configs = () => {
               <div>
                 <strong>Sair da conta</strong>
                 <span>Encerrar sua sessão neste dispositivo.</span>
+              </div>
+            </div>
+
+            <ChevronRight size={18} />
+          </button>
+
+          <button
+            className="security-option delete-account"
+            onClick={() => setMostrarConfirmacao(true)}
+          >
+            <div className="security-option-left">
+              <div className="config-option-icon delete-icon">
+                <Trash2 size={18} />
+              </div>
+
+              <div>
+                <strong>Excluir conta</strong>
+                <span>Excluir permanentemente sua conta e seus dados.</span>
               </div>
             </div>
 
@@ -139,6 +211,59 @@ const Configs = () => {
           </button>
         </div>
       </section>
+
+      {mostrarConfirmacao && (
+        <div className="delete-modal-overlay">
+          <div className="delete-confirmation-card">
+            <button
+              className="delete-modal-close"
+              onClick={() => setMostrarConfirmacao(false)}
+              aria-label="Fechar confirmação"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="delete-confirmation-icon">
+              <AlertTriangle size={25} />
+            </div>
+
+            <h2>Excluir sua conta?</h2>
+
+            <p>
+              Essa ação é permanente e irreversível. Todos os dados
+              associados à sua conta poderão ser excluídos.
+            </p>
+
+            <strong className="delete-warning">
+              Você não poderá desfazer essa ação.
+            </strong>
+
+            {erro && (
+              <p className="delete-error">
+                {erro}
+              </p>
+            )}
+
+            <div className="delete-confirmation-actions">
+              <button
+                className="delete-cancel-button"
+                onClick={() => setMostrarConfirmacao(false)}
+                disabled={excluindo}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className="delete-confirm-button"
+                onClick={excluirConta}
+                disabled={excluindo}
+              >
+                {excluindo ? "Excluindo..." : "Excluir conta"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
