@@ -1,4 +1,4 @@
-# CVFlow
+# CVFlow V1.0
 
 Plataforma para criação, personalização e otimização de currículos profissionais.
 
