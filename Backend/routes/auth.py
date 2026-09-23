@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta, timezone
+from models.user import User
+from models.curriculo import Curriculo
 
 # Imports de validação/autenticação
 import jwt
@@ -231,4 +233,139 @@ def delete_profile(user_id):
 
         return jsonify({
             "erro": "Não foi possível excluir a conta."
+        }), 500
+
+# Configurações
+
+@auth_bp.route("/settings", methods=["GET"])
+@token_required
+def get_settings(user_id):
+    usuario = db.session.get(User, user_id)
+
+    if not usuario:
+        return jsonify({
+            "erro": "Usuário não encontrado."
+        }), 404
+
+    return jsonify({
+        "configuracoes": {
+            "curriculo_principal_id": usuario.curriculo_principal_id,
+            "formato_padrao": usuario.formato_padrao
+        }
+    }), 200
+
+
+@auth_bp.route("/settings", methods=["PUT"])
+@token_required
+def update_settings(user_id):
+    try:
+        data = request.get_json() or {}
+
+        curriculo_principal_id = data.get(
+            "curriculo_principal_id"
+        )
+
+        formato_padrao = data.get(
+            "formato_padrao",
+            "pdf"
+        )
+
+        usuario = db.session.get(User, user_id)
+
+        if not usuario:
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
+
+        if formato_padrao != "pdf":
+            return jsonify({
+                "erro": "Formato inválido."
+            }), 400
+
+        if curriculo_principal_id is not None:
+            curriculo = Curriculo.query.filter_by(
+                id=curriculo_principal_id,
+                user_id=user_id
+            ).first()
+
+            if not curriculo:
+                return jsonify({
+                    "erro": "Currículo não encontrado."
+                }), 404
+
+        usuario.curriculo_principal_id = curriculo_principal_id
+        usuario.formato_padrao = formato_padrao
+
+        db.session.commit()
+
+        return jsonify({
+            "mensagem": "Configurações atualizadas com sucesso!",
+            "configuracoes": {
+                "curriculo_principal_id": usuario.curriculo_principal_id,
+                "formato_padrao": usuario.formato_padrao
+            }
+        }), 200
+
+    except Exception as erro:
+        db.session.rollback()
+
+        print("[SETTINGS ERROR]", repr(erro))
+
+        return jsonify({
+            "erro": "Não foi possível atualizar as configurações."
+        }), 500
+
+# Rota de alteração de Senha - Configurações
+
+@auth_bp.route("/password", methods=["PUT"])
+@token_required
+def update_password(user_id):
+    try:
+        data = request.get_json() or {}
+
+        senha_atual = data.get("senha_atual")
+        nova_senha = data.get("nova_senha")
+
+        if not senha_atual or not nova_senha:
+            return jsonify({
+                "erro": "Senha atual e nova senha são obrigatórias."
+            }), 400
+
+        if len(nova_senha) < 6:
+            return jsonify({
+                "erro": "A nova senha deve ter pelo menos 6 caracteres."
+            }), 400
+
+        usuario = db.session.get(User, user_id)
+
+        if not usuario:
+            return jsonify({
+                "erro": "Usuário não encontrado."
+            }), 404
+
+        if not check_password_hash(
+            usuario.senha_hash,
+            senha_atual
+        ):
+            return jsonify({
+                "erro": "A senha atual está incorreta."
+            }), 401
+
+        usuario.senha_hash = generate_password_hash(
+            nova_senha
+        )
+
+        db.session.commit()
+
+        return jsonify({
+            "mensagem": "Senha alterada com sucesso!"
+        }), 200
+
+    except Exception as erro:
+        db.session.rollback()
+
+        print("[PASSWORD ERROR]", repr(erro))
+
+        return jsonify({
+            "erro": "Não foi possível alterar a senha."
         }), 500

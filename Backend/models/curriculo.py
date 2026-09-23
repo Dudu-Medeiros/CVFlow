@@ -43,6 +43,7 @@ class Curriculo(db.Model):
 
     usuario = db.relationship(
         "User",
+        foreign_keys=[user_id],
         backref=db.backref(
             "curriculos",
             lazy=True,

@@ -443,6 +443,190 @@
   font-size: 12px !important;
 }
 
+/* FEEDBACK */
+
+.configs-feedback {
+  width: 100%;
+  max-width: 1000px;
+  margin: 16px auto 0;
+  padding: 11px 14px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.configs-feedback.success {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.configs-feedback.error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.configs-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* CARREGAMENTO */
+
+.configs-loading {
+  padding: 18px 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* MODAL DE SENHA */
+
+.password-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+.password-confirmation-card {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  padding: 30px;
+  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+  animation: deleteCardEntry 0.2s ease;
+}
+
+.password-confirmation-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.password-confirmation-card h2 {
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.password-confirmation-card > p {
+  margin: 0 0 20px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 21px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.password-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.password-form input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid #dbe3ef;
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.password-form input::placeholder {
+  color: #94a3b8;
+}
+
+.password-form input:hover {
+  border-color: #bfdbfe;
+}
+
+.password-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.password-error,
+.password-success {
+  margin: 0 0 16px !important;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px !important;
+  line-height: 18px !important;
+}
+
+.password-error {
+  background: #fef2f2;
+  color: #b91c1c !important;
+}
+
+.password-success {
+  background: #f0fdf4;
+  color: #15803d !important;
+}
+
+.password-confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.password-confirm-button {
+  height: 42px;
+  padding: 0 16px;
+  border: 1px solid #2563eb;
+  border-radius: 9px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.password-confirm-button:hover {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+}
+
+.password-confirm-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* TABLET */
 
 @media (max-width: 1000px) {
@@ -634,6 +818,22 @@
   .delete-confirm-button {
     width: 100%;
   }
+  .password-confirmation-card {
+  padding: 25px 20px;
+  border-radius: 15px;
+}
+
+.password-confirmation-card h2 {
+  font-size: 19px;
+}
+
+.password-confirmation-actions {
+  flex-direction: column-reverse;
+}
+
+.password-confirm-button {
+  width: 100%;
+}
 }
 
 /* CELULAR PEQUENO */

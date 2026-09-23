@@ -1,55 +1,29 @@
-/* =========================================
-   LAYOUT PRINCIPAL
-========================================= */
-
 .curriculos-layout {
   width: 100%;
   min-height: 100vh;
-
-  background: #f8faff;
-
   display: flex;
-
   box-sizing: border-box;
+  background: #f8faff;
 }
-
-
-/* =========================================
-   CONTEÚDO DA PÁGINA
-========================================= */
 
 .curriculos-page {
   width: calc(100% - 250px);
-
   min-height: 100vh;
-
   margin-top: 50px;
   margin-left: 250px;
-
   padding: 40px 50px;
-
   box-sizing: border-box;
-
   background: #f8faff;
-
   color: #334155;
 }
-
-
-/* =========================================
-   CABEÇALHO
-========================================= */
 
 .curriculos-header {
   width: 100%;
   max-width: 1200px;
-
   margin: 0 auto;
-
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-
   gap: 30px;
 }
 
@@ -57,87 +31,51 @@
   min-width: 0;
 }
 
-
-/* =========================================
-   BADGE
-========================================= */
-
 .curriculos-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
   padding: 7px 12px;
-
+  margin-bottom: 15px;
   border-radius: 20px;
-
   background: #eff6ff;
   color: #2563eb;
-
   font-size: 13px;
   font-weight: 600;
-
-  margin-bottom: 15px;
 }
-
-
-/* =========================================
-   TÍTULO
-========================================= */
 
 .curriculos-header h1 {
   margin: 0 0 10px;
-
   color: #2f3b4b;
-
   font-size: 34px;
   font-weight: 700;
-
   line-height: 1.2;
 }
 
 .curriculos-header p {
-  margin: 0;
-
   max-width: 650px;
-
+  margin: 0;
   color: #64748b;
-
   font-size: 15px;
   line-height: 24px;
 }
-
-
-/* =========================================
-   BOTÃO NOVO CURRÍCULO
-========================================= */
 
 .novo-curriculo-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   height: 48px;
-
   padding: 0 20px;
-
   border: none;
   border-radius: 10px;
-
   background: #2563eb;
   color: #fff;
-
   font-size: 14px;
   font-weight: 600;
-
   cursor: pointer;
-
   white-space: nowrap;
-
   transition:
     background 0.25s ease,
     transform 0.2s ease,
@@ -146,82 +84,52 @@
 
 .novo-curriculo-button:hover {
   background: #1d4ed8;
-
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-
   transform: translateY(-1px);
 }
-
-
-/* =========================================
-   TOOLBAR
-========================================= */
 
 .curriculos-toolbar {
   width: 100%;
   max-width: 1200px;
-
   margin: 40px auto 20px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
 }
-
-
-/* =========================================
-   BUSCA
-========================================= */
 
 .curriculos-search {
   width: 100%;
   max-width: 380px;
-
   height: 46px;
-
   display: flex;
   align-items: center;
-
   gap: 10px;
-
   padding: 0 14px;
-
   box-sizing: border-box;
-
   background: #fff;
-
   border: 1px solid #dbe3ef;
-
   border-radius: 10px;
-
   transition: 0.3s;
 }
 
 .curriculos-search:focus-within {
   border-color: #2563eb;
-
   box-shadow: 0 0 0 3px #eff6ff;
 }
 
 .curriculos-search svg {
   flex-shrink: 0;
-
   color: #64748b;
 }
 
 .curriculos-search input {
   width: 100%;
   height: 100%;
-
   border: none;
   outline: none;
-
   background: transparent;
-
   color: #334155;
-
   font-size: 14px;
 }
 
@@ -229,62 +137,33 @@
   color: #94a3b8;
 }
 
-
-/* =========================================
-   CONTADOR
-========================================= */
-
 .curriculos-count {
   color: #64748b;
-
   font-size: 13px;
   font-weight: 500;
 }
 
-
-/* =========================================
-   LISTA
-========================================= */
-
 .curriculos-list {
   width: 100%;
   max-width: 1200px;
-
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
-
   gap: 14px;
 }
 
-
-/* =========================================
-   CARD
-========================================= */
-
 .curriculo-card {
   width: 100%;
-
   min-height: 115px;
-
   padding: 22px 24px;
-
   box-sizing: border-box;
-
   display: flex;
   align-items: center;
-
   gap: 18px;
-
   background: #fff;
-
   border: 1px solid #e2e8f0;
-
   border-radius: 14px;
-
   box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
-
   transition:
     border-color 0.25s ease,
     box-shadow 0.25s ease,
@@ -293,133 +172,223 @@
 
 .curriculo-card:hover {
   border-color: #bfdbfe;
-
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
-
   transform: translateY(-1px);
 }
-
-
-/* =========================================
-   ÍCONE
-========================================= */
 
 .curriculo-icon {
   width: 52px;
   height: 52px;
-
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 12px;
-
   background: #eff6ff;
-
   color: #2563eb;
 }
 
-
-/* =========================================
-   INFORMAÇÕES
-========================================= */
-
 .curriculo-info {
   flex: 1;
-
   min-width: 0;
 }
 
 .curriculo-info h2 {
   margin: 0 0 5px;
-
+  overflow: hidden;
   color: #334155;
-
   font-size: 16px;
   font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .curriculo-cargo {
   margin: 0 0 9px;
-
+  overflow: hidden;
   color: #64748b;
-
   font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-
-
-/* =========================================
-   META
-========================================= */
 
 .curriculo-meta {
   display: flex;
   align-items: center;
-
+  flex-wrap: wrap;
   gap: 14px;
-
   color: #94a3b8;
-
   font-size: 12px;
 }
 
 .curriculo-meta span {
   display: inline-flex;
   align-items: center;
-
   gap: 5px;
 }
 
-
-/* =========================================
-   STATUS
-========================================= */
-
 .curriculo-status {
   padding: 4px 9px;
-
   border-radius: 20px;
-
   background: #ecfdf5;
-
   color: #059669;
-
   font-size: 11px;
   font-weight: 600;
 }
 
+/* Título do currículo */
 
-/* =========================================
-   AÇÕES
-========================================= */
+.curriculo-titulo {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 5px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #334155;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.curriculo-titulo span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.curriculo-titulo svg {
+  flex-shrink: 0;
+  color: #94a3b8;
+  opacity: 0;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.curriculo-titulo:hover svg {
+  opacity: 1;
+  color: #2563eb;
+}
+
+.curriculo-titulo:focus-visible {
+  outline: none;
+}
+
+.curriculo-titulo:focus-visible svg {
+  opacity: 1;
+  color: #2563eb;
+}
+
+.curriculo-titulo-edicao {
+  width: 100%;
+  max-width: 520px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 5px;
+}
+
+.curriculo-titulo-input {
+  width: 100%;
+  min-width: 0;
+  height: 36px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #334155;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.curriculo-titulo-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.curriculo-titulo-input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.curriculo-titulo-confirmar,
+.curriculo-titulo-cancelar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.curriculo-titulo-confirmar {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.curriculo-titulo-confirmar:hover:not(:disabled) {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.curriculo-titulo-cancelar {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.curriculo-titulo-cancelar:hover:not(:disabled) {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.curriculo-titulo-confirmar:disabled,
+.curriculo-titulo-cancelar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .curriculo-actions {
   display: flex;
   align-items: center;
-
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .curriculo-action,
 .curriculo-more {
   width: 38px;
   height: 38px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border: none;
   border-radius: 8px;
-
   background: transparent;
-
   color: #64748b;
-
   cursor: pointer;
-
   transition:
     background 0.2s ease,
     color 0.2s ease;
@@ -427,129 +396,278 @@
 
 .curriculo-action:hover {
   background: #eff6ff;
-
   color: #2563eb;
 }
 
 .curriculo-action.danger:hover {
   background: #fef2f2;
-
   color: #dc2626;
+}
+
+.curriculo-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .curriculo-more:hover {
   background: #f1f5f9;
-
   color: #334155;
 }
 
-
-/* =========================================
-   ESTADO VAZIO
-========================================= */
-
 .curriculos-empty {
   min-height: 350px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   padding: 50px 30px;
-
   box-sizing: border-box;
-
   background: #fff;
-
   border: 1px dashed #cbd5e1;
-
   border-radius: 16px;
-
   text-align: center;
 }
 
 .empty-icon {
   width: 65px;
   height: 65px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin-bottom: 18px;
-
   border-radius: 16px;
-
   background: #eff6ff;
-
   color: #2563eb;
 }
 
 .curriculos-empty h2 {
   margin: 0 0 8px;
-
   color: #334155;
-
   font-size: 19px;
 }
 
 .curriculos-empty p {
   max-width: 430px;
-
   margin: 0 0 22px;
-
   color: #64748b;
-
   font-size: 14px;
   line-height: 23px;
 }
 
+/* Modal */
 
-/* =========================================
-   TABLET
-========================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(15, 23, 42, 0.48);
+  backdrop-filter: blur(4px);
+  animation: modalOverlayIn 0.2s ease;
+}
+
+.modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  padding: 34px 32px 30px;
+  box-sizing: border-box;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+  text-align: center;
+  animation: modalContainerIn 0.25s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.modal-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+}
+
+.modal-icon-danger {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.modal-icon-info {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.modal-icon-success {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.modal-container h2 {
+  margin: 0 0 12px;
+  color: #2f3b4b;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.modal-container p {
+  margin: 0 auto;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 23px;
+}
+
+.modal-container strong {
+  color: #334155;
+  font-weight: 650;
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.modal-button {
+  min-width: 125px;
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-button:hover {
+  transform: translateY(-1px);
+}
+
+.modal-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.modal-button-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.modal-button-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.18);
+}
+
+.modal-button-secondary {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.modal-button-secondary:hover {
+  background: #e2e8f0;
+}
+
+.modal-button-danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+.modal-button-danger:hover {
+  background: #b91c1c;
+  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.18);
+}
+
+@keyframes modalOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalContainerIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 @media (max-width: 1000px) {
-
   .curriculos-page {
     padding: 35px 30px;
   }
 
   .curriculos-header {
     align-items: flex-start;
-
     flex-direction: column;
-
     gap: 22px;
   }
 
   .novo-curriculo-button {
     width: 100%;
   }
-
 }
 
-
-/* =========================================
-   TABLET / SIDEBAR
-========================================= */
-
 @media (max-width: 768px) {
-
   .curriculos-page {
     width: 100%;
-
     margin-left: 0;
-
     padding: 30px 25px;
   }
 
   .curriculos-toolbar {
     margin-top: 32px;
-
     align-items: flex-start;
-
     flex-direction: column;
   }
 
@@ -565,15 +683,12 @@
     padding: 18px;
   }
 
+  .curriculo-titulo-edicao {
+    max-width: 100%;
+  }
 }
 
-
-/* =========================================
-   CELULAR
-========================================= */
-
 @media (max-width: 480px) {
-
   .curriculos-page {
     padding: 25px 18px 35px;
   }
@@ -592,13 +707,11 @@
 
   .curriculos-header p {
     font-size: 14px;
-
     line-height: 22px;
   }
 
   .curriculos-toolbar {
     margin: 28px auto 16px;
-
     gap: 12px;
   }
 
@@ -610,27 +723,21 @@
     font-size: 12px;
   }
 
-
-  /* CARD */
-
   .curriculo-card {
     min-height: auto;
-
     padding: 17px;
-
     align-items: flex-start;
-
     gap: 13px;
   }
 
   .curriculo-icon {
     width: 44px;
     height: 44px;
-
     border-radius: 10px;
   }
 
-  .curriculo-info h2 {
+  .curriculo-info h2,
+  .curriculo-titulo {
     font-size: 15px;
   }
 
@@ -639,8 +746,6 @@
   }
 
   .curriculo-meta {
-    flex-wrap: wrap;
-
     gap: 7px;
   }
 
@@ -657,12 +762,24 @@
     height: 34px;
   }
 
+  .curriculo-titulo-edicao {
+    gap: 5px;
+  }
 
-  /* ESTADO VAZIO */
+  .curriculo-titulo-input {
+    height: 34px;
+    padding: 0 9px;
+    font-size: 14px;
+  }
+
+  .curriculo-titulo-confirmar,
+  .curriculo-titulo-cancelar {
+    width: 34px;
+    height: 34px;
+  }
 
   .curriculos-empty {
     min-height: 320px;
-
     padding: 35px 20px;
   }
 
@@ -674,15 +791,36 @@
     font-size: 13px;
   }
 
+  .modal-overlay {
+    padding: 18px;
+  }
+
+  .modal-container {
+    max-width: 100%;
+    padding: 32px 22px 24px;
+    border-radius: 16px;
+  }
+
+  .modal-container h2 {
+    font-size: 19px;
+  }
+
+  .modal-container p {
+    font-size: 13px;
+    line-height: 21px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 9px;
+  }
+
+  .modal-button {
+    width: 100%;
+  }
 }
 
-
-/* =========================================
-   CELULARES PEQUENOS
-========================================= */
-
 @media (max-width: 380px) {
-
   .curriculos-page {
     padding: 22px 15px 30px;
   }
@@ -704,4 +842,35 @@
     font-size: 11px;
   }
 
+  .curriculo-titulo-input {
+    height: 32px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .curriculo-titulo-confirmar,
+  .curriculo-titulo-cancelar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .modal-container {
+    padding: 30px 18px 22px;
+  }
+
+  .modal-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 16px;
+  }
+}
+
+.pdf-export-container {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  overflow: visible;
 }

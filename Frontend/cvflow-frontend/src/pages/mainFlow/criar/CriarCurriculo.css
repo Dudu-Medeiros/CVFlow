@@ -4,9 +4,147 @@
   color: #2f3b4b;
 }
 
+.cvflow-notificacao {
+  position: fixed;
+  top: 22px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(390px, calc(100vw - 32px));
+  padding: 15px 16px 18px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow:
+    0 14px 35px rgb(15 23 42 / 12%),
+    0 3px 8px rgb(15 23 42 / 6%);
+  animation: cvflow-notificacao-entrada 0.3s ease forwards;
+}
+
+.cvflow-notificacao-sucesso {
+  border-color: #bbf7d0;
+}
+
+.cvflow-notificacao-erro {
+  border-color: #fecaca;
+}
+
+.cvflow-notificacao-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+}
+
+.cvflow-notificacao-sucesso
+  .cvflow-notificacao-icone {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.cvflow-notificacao-erro
+  .cvflow-notificacao-icone {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.cvflow-notificacao-conteudo {
+  min-width: 0;
+  flex: 1;
+  padding-top: 1px;
+}
+
+.cvflow-notificacao-conteudo strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.cvflow-notificacao-conteudo p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.cvflow-notificacao-fechar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin: -4px -4px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.cvflow-notificacao-fechar:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.cvflow-notificacao-progresso {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  transform-origin: left;
+  animation: cvflow-notificacao-progresso 4.5s linear forwards;
+}
+
+.cvflow-notificacao-sucesso
+  .cvflow-notificacao-progresso {
+  background: #22c55e;
+}
+
+.cvflow-notificacao-erro
+  .cvflow-notificacao-progresso {
+  background: #ef4444;
+}
+
+@keyframes cvflow-notificacao-entrada {
+  from {
+    opacity: 0;
+    transform: translateX(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cvflow-notificacao-progresso {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
 .editor-header {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr minmax(280px, 520px) 1fr;
   align-items: center;
   gap: 20px;
   padding: 16px 32px;
@@ -48,8 +186,13 @@
   color: #ffffff;
 }
 
-.editor-salvar:hover {
+.editor-salvar:hover:not(:disabled) {
   background: #1d4ed8;
+}
+
+.editor-salvar:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .editor-titulo {
@@ -57,7 +200,21 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
+  min-width: 0;
   color: #1e40af;
+}
+
+.editor-titulo > svg {
+  flex-shrink: 0;
+}
+
+.editor-titulo-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  width: 100%;
 }
 
 .editor-titulo h1 {
@@ -65,6 +222,57 @@
   color: #1e293b;
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.2;
+}
+
+.editor-nome-curriculo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+}
+
+.editor-nome-curriculo label {
+  flex-shrink: 0;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.editor-nome-curriculo input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 30px;
+  padding: 0 9px;
+  border: 1px solid #dbe4ef;
+  border-radius: 7px;
+  outline: none;
+  background: #f8fafc;
+  color: #334155;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.editor-nome-curriculo input:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.editor-nome-curriculo input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px #eff6ff;
+}
+
+.editor-nome-curriculo input::placeholder {
+  color: #94a3b8;
 }
 
 .editor-modelo {
@@ -469,7 +677,9 @@
 
 @media (max-width: 1250px) {
   .editor-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(400px, 0.9fr);
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(400px, 0.9fr);
     gap: 20px;
     padding: 22px;
   }
@@ -496,18 +706,49 @@
 }
 
 @media (max-width: 650px) {
+  .cvflow-notificacao {
+    top: 14px;
+    right: 16px;
+    width: calc(100vw - 32px);
+  }
+
   .editor-header {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns:
+      auto 1fr auto;
     gap: 10px;
     padding: 14px 15px;
   }
 
   .editor-titulo {
-    gap: 6px;
+    justify-content: flex-start;
+    gap: 7px;
+  }
+
+  .editor-titulo > svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .editor-titulo-conteudo {
+    gap: 4px;
   }
 
   .editor-titulo h1 {
     font-size: 15px;
+  }
+
+  .editor-nome-curriculo {
+    gap: 5px;
+  }
+
+  .editor-nome-curriculo label {
+    display: none;
+  }
+
+  .editor-nome-curriculo input {
+    height: 29px;
+    padding: 0 8px;
+    font-size: 11px;
   }
 
   .editor-voltar,
@@ -586,5 +827,60 @@
 
   .preview-area {
     padding: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .cvflow-notificacao {
+    top: 10px;
+    right: 10px;
+    width: calc(100vw - 20px);
+    padding: 13px 13px 16px;
+  }
+
+  .cvflow-notificacao-icone {
+    width: 33px;
+    height: 33px;
+  }
+
+  .cvflow-notificacao-conteudo strong {
+    font-size: 12px;
+  }
+
+  .cvflow-notificacao-conteudo p {
+    font-size: 11px;
+  }
+
+  .editor-header {
+    grid-template-columns:
+      auto minmax(0, 1fr) auto;
+    gap: 7px;
+    padding: 12px;
+  }
+
+  .editor-titulo {
+    gap: 5px;
+  }
+
+  .editor-titulo > svg {
+    display: none;
+  }
+
+  .editor-titulo h1 {
+    font-size: 14px;
+  }
+
+  .editor-nome-curriculo input {
+    height: 27px;
+    font-size: 10px;
+  }
+
+  .editor-voltar,
+  .editor-salvar {
+    padding: 8px;
+  }
+
+  .editor-salvar {
+    font-size: 11px;
   }
 }
