@@ -9,12 +9,12 @@ import {
     X,
 } from "lucide-react";
 
-import { useAuth } from "../../context/AuthContext";
-
 import logo from "../../assets/logo-cvflow-sem-fundo.png";
 import modeloAts from "../../assets/modeloAts.png";
 import modeloModerno from "../../assets/modeloModerno.png";
 import modeloExecutivo from "../../assets/modeloExecutivo.png";
+
+import { useAuth } from "../../hooks/useAuth";
 
 import "./Modelos.css";
 

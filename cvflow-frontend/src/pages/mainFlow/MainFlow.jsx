@@ -17,8 +17,8 @@ import { useEffect, useRef, useState } from "react";
 
 import Sidebar from "../../components/Sidebar/Sidebar";
 import PreviewCurriculo from "../../components/CriarCurriculo/PreviewCurriculo";
-import { useAuth } from "../../context/AuthContext";
-import { getToken } from "../../utils/auth";
+import { getToken } from "../../services/auth";
+import { useAuth } from "../../hooks/useAuth";
 import gerarPdf from "../../utils/gerarPdf";
 import "./MainFlow.css";
 

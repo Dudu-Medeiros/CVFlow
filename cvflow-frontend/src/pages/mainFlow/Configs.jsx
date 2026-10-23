@@ -12,8 +12,7 @@ import {
 } from "lucide-react";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { getToken } from "../../utils/auth";
+import { getToken } from "../../services/auth";
 
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Configs.css";

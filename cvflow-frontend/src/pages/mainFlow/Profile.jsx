@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { useAuth } from "../../context/AuthContext";
 import "./Profile.css";
 
 const Profile = () => {

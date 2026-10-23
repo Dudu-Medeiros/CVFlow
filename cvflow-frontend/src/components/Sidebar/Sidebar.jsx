@@ -6,9 +6,10 @@ import {
   LogOut,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.css";
 import logo from "../../assets/logo-cvflow-sem-fundo.png";
+
+import { useAuth } from "../../hooks/useAuth";
 
 const Sidebar = () => {
   const navigate = useNavigate();

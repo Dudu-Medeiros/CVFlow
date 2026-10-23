@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+
+// 1. Atualizado para buscar o Hook da pasta correta
+import { useAuth } from "../../hooks/useAuth"; 
+
+// 2. Importando nossos novos serviços centralizados
+import { apiFetch } from "../../services/api";
+import { setToken } from "../../services/auth";
 
 import {
   Mail,
@@ -41,7 +47,6 @@ const Auth = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setErroLogin("");
     setCarregandoLogin(true);
 
@@ -52,38 +57,24 @@ const Auth = () => {
     }
 
     try {
-      const resposta = await fetch("http://127.0.0.1:5000/auth/login", {
+      // Usando nosso cliente HTTP centralizado
+      const dados = await apiFetch("/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           email: emailLogin,
           senha: senhaLogin,
         }),
       });
 
-      const dados = await resposta.json();
-
-      if (!resposta.ok) {
-        setErroLogin(dados.erro || "Erro ao realizar login.");
-        return;
-      }
-
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-
-      if (lembrarDeMim) {
-        localStorage.setItem("token", dados.token);
-      } else {
-        sessionStorage.setItem("token", dados.token);
-      }
+      // Salva o token usando o serviço (que já gerencia local/session storage)
+      setToken(dados.token, lembrarDeMim);
 
       login(dados.usuario);
       navigate("/flow");
     } catch (erro) {
       console.error("Erro ao realizar login:", erro);
-      setErroLogin("Não foi possível conectar ao servidor.");
+      // apiFetch já lança o erro tratado do Backend
+      setErroLogin(erro.message || "Não foi possível conectar ao servidor.");
     } finally {
       setCarregandoLogin(false);
     }
@@ -91,17 +82,11 @@ const Auth = () => {
 
   const handleRegistro = async (e) => {
     e.preventDefault();
-
     setErroRegistro("");
     setMensagemRegistro("");
     setCarregandoRegistro(true);
 
-    if (
-      !nomeRegistro ||
-      !emailRegistro ||
-      !senhaRegistro ||
-      !confirmarSenhaRegistro
-    ) {
+    if (!nomeRegistro || !emailRegistro || !senhaRegistro || !confirmarSenhaRegistro) {
       setErroRegistro("Preencha todos os campos.");
       setCarregandoRegistro(false);
       return;
@@ -120,11 +105,9 @@ const Auth = () => {
     }
 
     try {
-      const resposta = await fetch("http://127.0.0.1:5000/auth/register", {
+      // Usando nosso cliente HTTP centralizado
+      await apiFetch("/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           nome: nomeRegistro.trim(),
           email: emailRegistro.trim(),
@@ -132,37 +115,25 @@ const Auth = () => {
         }),
       });
 
-      const dados = await resposta.json();
-
-      if (!resposta.ok) {
-        setErroRegistro(dados.erro || "Erro ao realizar cadastro.");
-        return;
-      }
-
+      // Sucesso: limpa os campos e avisa o usuário
       setNomeRegistro("");
       setEmailRegistro("");
       setSenhaRegistro("");
       setConfirmarSenhaRegistro("");
 
-      setEmailLogin(emailRegistro);
-      setMensagemRegistro(
-        "Conta criada com sucesso! Agora faça login para continuar."
-      );
-
+      setEmailLogin(emailRegistro.trim());
+      setMensagemRegistro("Conta criada com sucesso! Agora faça login para continuar.");
       setModo("login");
     } catch (erro) {
       console.error("Erro ao realizar cadastro:", erro);
-      setErroRegistro("Não foi possível conectar ao servidor.");
+      setErroRegistro(erro.message || "Não foi possível conectar ao servidor.");
     } finally {
       setCarregandoRegistro(false);
     }
   };
 
   const alternarModo = () => {
-    setModo((modoAtual) =>
-      modoAtual === "login" ? "registro" : "login"
-    );
-
+    setModo((modoAtual) => (modoAtual === "login" ? "registro" : "login"));
     setErroLogin("");
     setErroRegistro("");
     setMensagemRegistro("");
@@ -178,20 +149,13 @@ const Auth = () => {
 
           <div className="auth-form login-form">
             <div className="auth-content">
-              <span className="auth-badge">
-                Bem-vindo de volta
-              </span>
-
+              <span className="auth-badge">Bem-vindo de volta</span>
               <h1>Entre na sua conta</h1>
-
-              <p>
-                Acesse seu espaço e continue construindo seu próximo currículo.
-              </p>
+              <p>Acesse seu espaço e continue construindo seu próximo currículo.</p>
 
               <form onSubmit={handleLogin}>
                 <div className="input-group">
                   <Mail size={18} />
-
                   <input
                     type="email"
                     placeholder="Seu e-mail"
@@ -202,31 +166,19 @@ const Auth = () => {
 
                 <div className="input-group password-group">
                   <Lock size={18} />
-
                   <input
                     type={mostrarSenhaLogin ? "text" : "password"}
                     placeholder="Sua senha"
                     value={senhaLogin}
                     onChange={(e) => setSenhaLogin(e.target.value)}
                   />
-
                   <button
                     type="button"
                     className="password-toggle"
-                    onClick={() =>
-                      setMostrarSenhaLogin(!mostrarSenhaLogin)
-                    }
-                    aria-label={
-                      mostrarSenhaLogin
-                        ? "Ocultar senha"
-                        : "Mostrar senha"
-                    }
+                    onClick={() => setMostrarSenhaLogin(!mostrarSenhaLogin)}
+                    aria-label={mostrarSenhaLogin ? "Ocultar senha" : "Mostrar senha"}
                   >
-                    {mostrarSenhaLogin ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
+                    {mostrarSenhaLogin ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
@@ -235,16 +187,11 @@ const Auth = () => {
                     <input
                       type="checkbox"
                       checked={lembrarDeMim}
-                      onChange={(e) =>
-                        setLembrarDeMim(e.target.checked)
-                      }
+                      onChange={(e) => setLembrarDeMim(e.target.checked)}
                     />
                     Lembrar de mim
                   </label>
-
-                  <a href="#">
-                    Esqueci minha senha
-                  </a>
+                  <a href="#">Esqueci minha senha</a>
                 </div>
 
                 {mensagemRegistro && (
@@ -271,14 +218,8 @@ const Auth = () => {
               </form>
 
               <div className="auth-switch">
-                <span>
-                  Ainda não possui uma conta?
-                </span>
-
-                <button
-                  type="button"
-                  onClick={alternarModo}
-                >
+                <span>Ainda não possui uma conta?</span>
+                <button type="button" onClick={alternarModo}>
                   Criar conta
                 </button>
               </div>
@@ -287,116 +228,64 @@ const Auth = () => {
 
           <div className="auth-form registro-form">
             <div className="auth-content">
-              <span className="auth-badge">
-                Comece agora
-              </span>
-
+              <span className="auth-badge">Comece agora</span>
               <h1>Crie sua conta</h1>
-
-              <p>
-                Preencha seus dados e comece a criar currículos profissionais.
-              </p>
+              <p>Preencha seus dados e comece a criar currículos profissionais.</p>
 
               <form onSubmit={handleRegistro}>
                 <div className="input-group">
                   <User size={18} />
-
                   <input
                     type="text"
                     placeholder="Nome completo"
                     value={nomeRegistro}
-                    onChange={(e) =>
-                      setNomeRegistro(e.target.value)
-                    }
+                    onChange={(e) => setNomeRegistro(e.target.value)}
                   />
                 </div>
 
                 <div className="input-group">
                   <Mail size={18} />
-
                   <input
                     type="email"
                     placeholder="Seu e-mail"
                     value={emailRegistro}
-                    onChange={(e) =>
-                      setEmailRegistro(e.target.value)
-                    }
+                    onChange={(e) => setEmailRegistro(e.target.value)}
                   />
                 </div>
 
                 <div className="input-group password-group">
                   <Lock size={18} />
-
                   <input
-                    type={
-                      mostrarSenhaRegistro
-                        ? "text"
-                        : "password"
-                    }
+                    type={mostrarSenhaRegistro ? "text" : "password"}
                     placeholder="Crie uma senha"
                     value={senhaRegistro}
-                    onChange={(e) =>
-                      setSenhaRegistro(e.target.value)
-                    }
+                    onChange={(e) => setSenhaRegistro(e.target.value)}
                   />
-
                   <button
                     type="button"
                     className="password-toggle"
-                    onClick={() =>
-                      setMostrarSenhaRegistro(
-                        !mostrarSenhaRegistro
-                      )
-                    }
-                    aria-label={
-                      mostrarSenhaRegistro
-                        ? "Ocultar senha"
-                        : "Mostrar senha"
-                    }
+                    onClick={() => setMostrarSenhaRegistro(!mostrarSenhaRegistro)}
+                    aria-label={mostrarSenhaRegistro ? "Ocultar senha" : "Mostrar senha"}
                   >
-                    {mostrarSenhaRegistro ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
+                    {mostrarSenhaRegistro ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
                 <div className="input-group password-group">
                   <Lock size={18} />
-
                   <input
-                    type={
-                      mostrarConfirmacao
-                        ? "text"
-                        : "password"
-                    }
+                    type={mostrarConfirmacao ? "text" : "password"}
                     placeholder="Confirme sua senha"
                     value={confirmarSenhaRegistro}
-                    onChange={(e) =>
-                      setConfirmarSenhaRegistro(e.target.value)
-                    }
+                    onChange={(e) => setConfirmarSenhaRegistro(e.target.value)}
                   />
-
                   <button
                     type="button"
                     className="password-toggle"
-                    onClick={() =>
-                      setMostrarConfirmacao(
-                        !mostrarConfirmacao
-                      )
-                    }
-                    aria-label={
-                      mostrarConfirmacao
-                        ? "Ocultar senha"
-                        : "Mostrar senha"
-                    }
+                    onClick={() => setMostrarConfirmacao(!mostrarConfirmacao)}
+                    aria-label={mostrarConfirmacao ? "Ocultar senha" : "Mostrar senha"}
                   >
-                    {mostrarConfirmacao ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
+                    {mostrarConfirmacao ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
@@ -412,25 +301,14 @@ const Auth = () => {
                   disabled={carregandoRegistro}
                   aria-busy={carregandoRegistro}
                 >
-                  {carregandoRegistro
-                    ? "Criando conta..."
-                    : "Criar minha conta"}
-
-                  {!carregandoRegistro && (
-                    <ArrowRight size={18} />
-                  )}
+                  {carregandoRegistro ? "Criando conta..." : "Criar minha conta"}
+                  {!carregandoRegistro && <ArrowRight size={18} />}
                 </button>
               </form>
 
               <div className="auth-switch">
-                <span>
-                  Já possui uma conta?
-                </span>
-
-                <button
-                  type="button"
-                  onClick={alternarModo}
-                >
+                <span>Já possui uma conta?</span>
+                <button type="button" onClick={alternarModo}>
                   Entrar
                 </button>
               </div>
@@ -446,30 +324,22 @@ const Auth = () => {
 
           <div className="auth-message login-message">
             <span>CVFlow</span>
-
             <h2>
               Seu currículo.
               <br />
               Sua melhor oportunidade.
             </h2>
-
-            <p>
-              Crie, personalize e conquiste novas oportunidades profissionais.
-            </p>
+            <p>Crie, personalize e conquiste novas oportunidades profissionais.</p>
           </div>
 
           <div className="auth-message registro-message">
             <span>CVFlow</span>
-
             <h2>
               Comece sua jornada.
               <br />
               Destaque seu potencial.
             </h2>
-
-            <p>
-              Transforme suas experiências em um currículo que representa você.
-            </p>
+            <p>Transforme suas experiências em um currículo que representa você.</p>
           </div>
         </div>
       </div>

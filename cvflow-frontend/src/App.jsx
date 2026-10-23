@@ -6,10 +6,11 @@ import Auth from "./pages/paginas-input/Auth";
 import CurriculoMain from "./pages/mainFlow/CurriculoMain";
 import Profile from "./pages/mainFlow/Profile";
 import Configs from "./pages/mainFlow/Configs";
-import Modelos from "./pages/modelos/Modelos"
+import Modelos from "./pages/modelos/Modelos";
 import CriarCurriculo from "./pages/mainFlow/criar/CriarCurriculo";
+import Planos from "./pages/planos/Planos";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./routes/ProtectedRoute"; 
 
 import "./App.css";
 
@@ -18,7 +19,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/modelos" element={<Modelos/>}/>
+            <Route path="/modelos" element={<Modelos/>} />
+            <Route path="/planos" element={<Planos/>} />
 
             <Route element={<ProtectedRoute />}>
                 <Route path="/flow" element={<MainFlow />} />
