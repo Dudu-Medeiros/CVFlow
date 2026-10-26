@@ -10,11 +10,10 @@ import {
   CopyPlus,
   Download,
   Eye,
+  Rocket
 } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-
 import Sidebar from "../../components/Sidebar/Sidebar";
 import PreviewCurriculo from "../../components/CriarCurriculo/PreviewCurriculo";
 import { getToken } from "../../services/auth";
@@ -25,103 +24,60 @@ import "./MainFlow.css";
 const modelosDisponiveis = {
   ats: {
     nome: "ATS",
-    descricao:
-      "Modelo objetivo e compatível com sistemas de recrutamento.",
+    descricao: "Modelo objetivo e compatível com sistemas de recrutamento.",
   },
-
   moderno: {
     nome: "Moderno",
-    descricao:
-      "Modelo visual com duas colunas para destacar suas habilidades.",
+    descricao: "Modelo visual com duas colunas para destacar suas habilidades.",
   },
-
   executivo: {
     nome: "Executivo",
-    descricao:
-      "Modelo elegante e organizado para uma apresentação profissional.",
+    descricao: "Modelo elegante e organizado para apresentação profissional.",
   },
 };
 
 const MainFlow = () => {
   const navigate = useNavigate();
   const { usuario } = useAuth();
-
   const previewPdfRef = useRef(null);
-
+  
   const [curriculos, setCurriculos] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
-
+  
   const [modalAberto, setModalAberto] = useState(false);
-  const [modeloSelecionado, setModeloSelecionado] =
-    useState(null);
-
-  const [curriculosDoModelo, setCurriculosDoModelo] =
-    useState([]);
-
-  const [curriculoSelecionado, setCurriculoSelecionado] =
-    useState(null);
-
-  const [etapaModal, setEtapaModal] =
-    useState("modelo");
-
-  const [curriculoVisualizacao, setCurriculoVisualizacao] =
-    useState(null);
-
-  const [visualizacaoAberta, setVisualizacaoAberta] =
-    useState(false);
-
-  const [gerandoPdf, setGerandoPdf] =
-    useState(false);
-
-  const [erroExportacao, setErroExportacao] =
-    useState("");
+  const [modeloSelecionado, setModeloSelecionado] = useState(null);
+  const [curriculosDoModelo, setCurriculosDoModelo] = useState([]);
+  const [curriculoSelecionado, setCurriculoSelecionado] = useState(null);
+  const [etapaModal, setEtapaModal] = useState("modelo");
+  
+  const [curriculoVisualizacao, setCurriculoVisualizacao] = useState(null);
+  const [visualizacaoAberta, setVisualizacaoAberta] = useState(false);
+  const [gerandoPdf, setGerandoPdf] = useState(false);
+  const [erroExportacao, setErroExportacao] = useState("");
 
   useEffect(() => {
     const buscarCurriculos = async () => {
       const token = getToken();
-
       if (!token) {
-        setErro(
-          "Token de autenticação não encontrado."
-        );
+        setErro("Token não encontrado. Faça login novamente.");
         setCarregando(false);
         return;
       }
-
       try {
-        const resposta = await fetch(
-          "http://localhost:5000/curriculos",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
+        const resposta = await fetch("http://localhost:5000/curriculos", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const dados = await resposta.json();
-
-        if (!resposta.ok) {
-          throw new Error(
-            dados.erro ||
-              "Não foi possível carregar os currículos."
-          );
-        }
-
+        if (!resposta.ok) throw new Error(dados.erro || "Erro ao carregar currículos.");
         setCurriculos(dados.curriculos || []);
       } catch (error) {
-        console.error(
-          "[CURRICULOS ERROR]",
-          error
-        );
-
         setErro(error.message);
       } finally {
         setCarregando(false);
       }
     };
-
     buscarCurriculos();
   }, []);
 
@@ -135,1021 +91,308 @@ const MainFlow = () => {
 
   const fecharModal = () => {
     setModalAberto(false);
-    setModeloSelecionado(null);
-    setCurriculosDoModelo([]);
-    setCurriculoSelecionado(null);
-    setEtapaModal("modelo");
+    setTimeout(() => {
+      setModeloSelecionado(null);
+      setCurriculosDoModelo([]);
+      setCurriculoSelecionado(null);
+      setEtapaModal("modelo");
+    }, 300);
   };
 
   const selecionarModelo = (modelo) => {
     setModeloSelecionado(modelo);
     setCurriculoSelecionado(null);
-
-    const existentes = curriculos.filter(
-      (curriculo) =>
-        curriculo.modelo === modelo
-    );
-
+    const existentes = curriculos.filter((c) => c.modelo === modelo);
     setCurriculosDoModelo(existentes);
-
     if (existentes.length > 0) {
       setEtapaModal("existente");
-      return;
+    } else {
+      setEtapaModal("confirmar");
     }
-
-    setEtapaModal("confirmar");
   };
 
   const abrirVisualizacao = (curriculo) => {
-    if (!curriculo) {
-      return;
-    }
-
+    if (!curriculo) return;
     fecharModal();
-
     setErroExportacao("");
     setCurriculoVisualizacao(curriculo);
     setVisualizacaoAberta(true);
   };
 
   const fecharVisualizacao = () => {
-    if (gerandoPdf) {
-      return;
-    }
-
+    if (gerandoPdf) return;
     setVisualizacaoAberta(false);
-    setCurriculoVisualizacao(null);
-    setErroExportacao("");
+    setTimeout(() => {
+      setCurriculoVisualizacao(null);
+      setErroExportacao("");
+    }, 300);
   };
 
   const exportarCurriculo = async () => {
-    if (
-      !curriculoVisualizacao ||
-      gerandoPdf
-    ) {
-      return;
-    }
-
+    if (!curriculoVisualizacao || gerandoPdf) return;
     try {
       setGerandoPdf(true);
       setErroExportacao("");
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 700);
-      });
-
-      if (!previewPdfRef.current) {
-        throw new Error(
-          "Área de exportação não encontrada."
-        );
-      }
-
-      const nomeArquivo = (
-        curriculoVisualizacao.titulo ||
-        curriculoVisualizacao.dados?.nome ||
-        "curriculo"
-      )
+      await new Promise((res) => setTimeout(res, 700));
+      if (!previewPdfRef.current) throw new Error("Área de exportação não encontrada.");
+      
+      const nomeArquivo = (curriculoVisualizacao.titulo || curriculoVisualizacao.dados?.nome || "curriculo")
         .replace(/[^a-zA-Z0-9À-ÿ\s-]/g, "")
         .trim()
         .replace(/\s+/g, "-");
-
-      await gerarPdf(
-        previewPdfRef.current,
-        `${nomeArquivo || "curriculo"}.pdf`
-      );
+      await gerarPdf(previewPdfRef.current, `${nomeArquivo || "curriculo"}.pdf`);
     } catch (error) {
-      console.error(
-        "Erro ao gerar PDF:",
-        error
-      );
-
-      setErroExportacao(
-        "Não foi possível gerar o PDF. Tente novamente."
-      );
+      setErroExportacao("Falha na geração do PDF. Tente novamente.");
     } finally {
       setGerandoPdf(false);
     }
   };
 
-  const escolherCriarNovo = () => {
-    setCurriculoSelecionado(null);
-    setEtapaModal("dados");
-  };
-
-  const selecionarCurriculoParaReutilizar = (
-    curriculo
-  ) => {
-    setCurriculoSelecionado(curriculo);
-  };
-
   const iniciarDoZero = () => {
-    if (!modeloSelecionado) {
-      return;
-    }
-
+    if (!modeloSelecionado) return;
     fecharModal();
-
     navigate("/flow/criar", {
-      state: {
-        modoEdicao: false,
-        modeloSelecionado,
-        reutilizarDados: false,
-        dadosIniciais: null,
-      },
+      state: { modoEdicao: false, modeloSelecionado, reutilizarDados: false, dadosIniciais: null },
     });
   };
 
   const reutilizarDados = () => {
-    if (
-      !modeloSelecionado ||
-      !curriculoSelecionado
-    ) {
-      return;
-    }
-
+    if (!modeloSelecionado || !curriculoSelecionado) return;
     fecharModal();
-
     navigate("/flow/criar", {
-      state: {
-        modoEdicao: false,
-        modeloSelecionado,
-        reutilizarDados: true,
-        dadosIniciais:
-          curriculoSelecionado.dados || null,
-      },
+      state: { modoEdicao: false, modeloSelecionado, reutilizarDados: true, dadosIniciais: curriculoSelecionado.dados || null },
     });
   };
 
-  const voltarParaModelos = () => {
-    setModeloSelecionado(null);
-    setCurriculosDoModelo([]);
-    setCurriculoSelecionado(null);
-    setEtapaModal("modelo");
-  };
-
-  const voltarParaEscolhaExistente = () => {
-    setCurriculoSelecionado(null);
-    setEtapaModal("existente");
-  };
-
-  const abrirCurriculo = (curriculo) => {
-    abrirVisualizacao(curriculo);
-  };
-
-  const nomeUsuario =
-    usuario?.nome || "usuário";
-
-  const curriculosCompletos =
-    curriculos.filter(
-      (curriculo) =>
-        curriculo.dados?.completo === true
-    ).length;
-
+  const nomeUsuario = usuario?.nome || "Profissional";
+  const curriculosCompletos = curriculos.filter((c) => c.dados?.completo).length;
   const ultimoCurriculo = curriculos[0];
 
   const formatarData = (data) => {
-    if (!data) {
-      return "Nenhuma";
-    }
-
-    return new Date(data).toLocaleDateString(
-      "pt-BR"
-    );
+    if (!data) return "Nenhuma atividade";
+    return new Date(data).toLocaleDateString("pt-BR", { day: '2-digit', month: 'short', year: 'numeric' });
   };
 
   return (
-    <main className="mainflow">
+    <main className="mainflow-container">
       <Sidebar />
-
-      <section className="mainflow-content">
-        <header className="mainflow-header">
-          <div>
-            <span className="header-greeting">
-              Boa tarde 👋
-            </span>
-
-            <h1>
-              Olá, {nomeUsuario}!
-            </h1>
-
-            <p>
-              Vamos construir seu próximo currículo?
-            </p>
+      <div className="mainflow-workspace">
+        <header className="workspace-header animate-fade-in">
+          <div className="header-greeting">
+            <h1>Bem-vindo de volta, {nomeUsuario.split(' ')[0]}</h1>
+            <p>Seu painel de controle e evolução de carreira.</p>
           </div>
-
-          <button
-            className="profile-button"
-            type="button"
-            onClick={() => navigate("/perfil")}
-          >
-            <div className="profile-avatar">
-              {nomeUsuario
-                .charAt(0)
-                .toUpperCase()}
+          <div className="header-profile" onClick={() => navigate("/perfil")}>
+            <div className="profile-initial">{nomeUsuario.charAt(0).toUpperCase()}</div>
+            <div className="profile-info">
+              <span className="profile-name">Minha Conta</span>
+              <span className="profile-plan">Plano Starter</span>
             </div>
-
-            <span>{nomeUsuario}</span>
-
-            <ChevronRight size={17} />
-          </button>
+            <ChevronRight size={18} className="profile-arrow" />
+          </div>
         </header>
 
-        <section className="create-card">
-          <div className="create-card-content">
-            <span className="create-badge">
-              <FileText size={15} />
-              Seu próximo passo
-            </span>
-
-            <h2>
-              Crie um currículo que
-              <span> destaque você.</span>
-            </h2>
-
-            <p>
-              Organize suas experiências,
-              habilidades e objetivos
-              profissionais em um currículo
-              moderno e profissional.
-            </p>
-
-            <button
-              className="primary-button"
-              type="button"
-              onClick={abrirModalCriacao}
-            >
-              <Plus size={19} />
-              Criar novo currículo
-            </button>
-          </div>
-
-          <div className="create-card-decoration">
-            <FileText
-              size={150}
-              strokeWidth={0.7}
-            />
-          </div>
-        </section>
-
-        <section className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon blue">
-              <FileText size={20} />
+        <div className="bento-grid animate-slide-up">
+          <div className="bento-box create-box">
+            <div className="create-box-content">
+              <div className="create-tag"><Rocket size={14} /> Destaque-se</div>
+              <h2>Crie um documento<br/>que abre portas.</h2>
+              <p>Escolha um modelo testado pelo mercado e deixe nosso sistema guiar o seu preenchimento.</p>
+              <button className="btn-create-action" onClick={abrirModalCriacao}>
+                <Plus size={18} /> Novo Currículo
+              </button>
             </div>
-
-            <div>
-              <span>
-                Currículos criados
-              </span>
-
-              <strong>
-                {curriculos.length}
-              </strong>
+            <div className="create-box-art">
+              <div className="art-circle"></div>
+              <FileText size={120} className="art-icon" />
             </div>
           </div>
 
-          <div className="stat-card">
-            <div className="stat-icon green">
-              <CheckCircle2 size={20} />
-            </div>
-
-            <div>
-              <span>
-                Currículos completos
-              </span>
-
-              <strong>
-                {curriculosCompletos}
-              </strong>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-icon purple">
-              <Clock3 size={20} />
-            </div>
-
-            <div>
-              <span>
-                Última atividade
-              </span>
-
-              <strong>
-                {formatarData(
-                  ultimoCurriculo?.updated_at
-                )}
-              </strong>
-            </div>
-          </div>
-        </section>
-
-        <section className="recent-section">
-          <div className="section-header">
-            <div>
-              <h2>
-                Seus currículos
-              </h2>
-
-              <p>
-                Acompanhe e continue seus
-                currículos.
-              </p>
-            </div>
-
-            <button
-              className="view-all"
-              type="button"
-              onClick={() =>
-                navigate("/curriculos")
-              }
-            >
-              Ver todos
-              <ChevronRight size={16} />
-            </button>
-          </div>
-
-          {carregando && (
-            <div className="empty-state">
-              <p>
-                Carregando seus currículos...
-              </p>
-            </div>
-          )}
-
-          {!carregando && erro && (
-            <div className="empty-state">
-              <h3>
-                Não foi possível carregar
-                os currículos
-              </h3>
-
-              <p>{erro}</p>
-            </div>
-          )}
-
-          {!carregando &&
-            !erro &&
-            curriculos.length === 0 && (
-              <div className="empty-state">
-                <div className="empty-icon">
-                  <FileText size={28} />
+          <div className="bento-box stats-box">
+            <h3>Seu Desempenho</h3>
+            <div className="stats-list">
+              <div className="stat-item">
+                <div className="stat-icon-wrapper bg-blue"><FileText size={18} /></div>
+                <div className="stat-info">
+                  <span className="stat-label">Criados</span>
+                  <span className="stat-value">{curriculos.length}</span>
                 </div>
-
-                <h3>
-                  Você ainda não criou
-                  nenhum currículo
-                </h3>
-
-                <p>
-                  Comece agora e crie seu
-                  primeiro currículo
-                  profissional com o CVFlow.
-                </p>
-
-                <button
-                  className="secondary-button"
-                  type="button"
-                  onClick={abrirModalCriacao}
-                >
-                  <Plus size={17} />
-                  Criar currículo
-                </button>
               </div>
-            )}
-
-          {!carregando &&
-            !erro &&
-            curriculos.length > 0 && (
-              <div className="curriculos-lista">
-                {curriculos
-                  .slice(0, 5)
-                  .map((curriculo) => (
-                    <button
-                      className="curriculo-item"
-                      key={curriculo.id}
-                      type="button"
-                      onClick={() =>
-                        abrirCurriculo(
-                          curriculo
-                        )
-                      }
-                    >
-                      <div className="curriculo-item-icon">
-                        <FileText size={22} />
-                      </div>
-
-                      <div className="curriculo-item-content">
-                        <h3>
-                          {curriculo.titulo ||
-                            "Meu currículo"}
-                        </h3>
-
-                        <span>
-                          Modelo:{" "}
-                          {modelosDisponiveis[
-                            curriculo.modelo
-                          ]?.nome ||
-                            curriculo.modelo}
-                        </span>
-
-                        <small>
-                          Atualizado em{" "}
-                          {formatarData(
-                            curriculo.updated_at
-                          )}
-                        </small>
-                      </div>
-
-                      <span className="curriculo-item-button">
-                        <ChevronRight size={18} />
-                      </span>
-                    </button>
-                  ))}
+              <div className="stat-item">
+                <div className="stat-icon-wrapper bg-green"><CheckCircle2 size={18} /></div>
+                <div className="stat-info">
+                  <span className="stat-label">Completos</span>
+                  <span className="stat-value">{curriculosCompletos}</span>
+                </div>
               </div>
-            )}
+              <div className="stat-item">
+                <div className="stat-icon-wrapper bg-purple"><Clock3 size={18} /></div>
+                <div className="stat-info">
+                  <span className="stat-label">Última Edição</span>
+                  <span className="stat-value small-val">{formatarData(ultimoCurriculo?.updated_at)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section className="documents-section animate-slide-up-delayed">
+          <div className="section-title-row">
+            <h2>Arquivos Recentes</h2>
+            <button className="btn-view-all" onClick={() => navigate("/curriculos")}>
+              Ver galeria <ArrowRight size={16} />
+            </button>
+          </div>
+
+          {carregando ? (
+            <div className="workspace-empty">Carregando seus arquivos...</div>
+          ) : erro ? (
+            <div className="workspace-empty error">{erro}</div>
+          ) : curriculos.length === 0 ? (
+            <div className="workspace-empty">
+              <div className="empty-circle"><FileText size={32} /></div>
+              <h3>Sua mesa está limpa</h3>
+              <p>Você ainda não possui documentos criados. Inicie um novo agora.</p>
+              <button className="btn-outline" onClick={abrirModalCriacao}>Criar o primeiro</button>
+            </div>
+          ) : (
+            <div className="documents-grid">
+              {curriculos.slice(0, 4).map((curriculo) => (
+                <div className="doc-card" key={curriculo.id} onClick={() => abrirVisualizacao(curriculo)}>
+                  <div className="doc-preview">
+                    
+                    <div className="doc-thumbnail-container">
+                      <div className="doc-thumbnail-wrapper">
+                        <PreviewCurriculo modelo={curriculo.modelo} dados={curriculo.dados || {}} />
+                      </div>
+                    </div>
+
+                    <div className="doc-hover-action">
+                      <Eye size={20} /> Visualizar
+                    </div>
+                  </div>
+                  <div className="doc-info">
+                    <h4>{curriculo.titulo || "Meu Currículo"}</h4>
+                    <p>{modelosDisponiveis[curriculo.modelo]?.nome || curriculo.modelo} • {formatarData(curriculo.updated_at)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
-      </section>
+      </div>
 
       {curriculoVisualizacao && (
-        <div
-          className="pdf-export-container"
-          ref={previewPdfRef}
-        >
-          <PreviewCurriculo
-            modelo={curriculoVisualizacao.modelo}
-            dados={
-              curriculoVisualizacao.dados || {}
-            }
-          />
+        <div className="pdf-export-container" ref={previewPdfRef}>
+          <PreviewCurriculo modelo={curriculoVisualizacao.modelo} dados={curriculoVisualizacao.dados || {}} />
         </div>
       )}
 
       {modalAberto && (
-        <div
-          className="modal-overlay"
-          onMouseDown={(event) => {
-            if (
-              event.target ===
-              event.currentTarget
-            ) {
-              fecharModal();
-            }
-          }}
-        >
-          <div
-            className="modelo-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modelo-modal-titulo"
-          >
-            <button
-              className="modal-close"
-              type="button"
-              aria-label="Fechar"
-              onClick={fecharModal}
-            >
-              <X size={19} />
-            </button>
-
+        <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) fecharModal(); }}>
+          <div className="modal-panel" role="dialog">
+            <button className="btn-close-modal" onClick={fecharModal}><X size={20} /></button>
+            
             {etapaModal === "modelo" && (
-              <>
-                <div className="modal-header">
-                  <div className="modal-header-icon">
-                    <FileText size={21} />
-                  </div>
-
-                  <div>
-                    <h2 id="modelo-modal-titulo">
-                      Escolha um modelo
-                    </h2>
-
-                    <p>
-                      Selecione o modelo que
-                      deseja usar no seu
-                      currículo.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="modelos-modal-lista">
-                  {Object.entries(
-                    modelosDisponiveis
-                  ).map(
-                    ([chave, modelo]) => {
-                      const existe =
-                        curriculos.some(
-                          (curriculo) =>
-                            curriculo.modelo ===
-                            chave
-                        );
-
-                      return (
-                        <button
-                          className="modelo-modal-item"
-                          type="button"
-                          key={chave}
-                          onClick={() =>
-                            selecionarModelo(
-                              chave
-                            )
-                          }
-                        >
-                          <div className="modelo-modal-preview">
-                            <FileText
-                              size={25}
-                            />
+              <div className="modal-content">
+                <div className="modal-icon-header"><Layers size={24} /></div>
+                <h2>Escolha um Template</h2>
+                <p>Selecione a estrutura visual que melhor representa seu perfil.</p>
+                <div className="template-list">
+                  {Object.entries(modelosDisponiveis).map(([chave, modelo]) => {
+                    const emUso = curriculos.some((c) => c.modelo === chave);
+                    return (
+                      <div className="template-option" key={chave} onClick={() => selecionarModelo(chave)}>
+                        <div className="template-thumb"><FileText size={24} /></div>
+                        <div className="template-data">
+                          <div className="template-title">
+                            {modelo.nome} {emUso && <span className="tag-in-use">Em uso</span>}
                           </div>
-
-                          <div className="modelo-modal-info">
-                            <div className="modelo-modal-title">
-                              <strong>
-                                {modelo.nome}
-                              </strong>
-
-                              {existe && (
-                                <span className="modelo-existente-badge">
-                                  Já utilizado
-                                </span>
-                              )}
-                            </div>
-
-                            <p>
-                              {modelo.descricao}
-                            </p>
-                          </div>
-
-                          <ChevronRight
-                            size={18}
-                            className="modelo-modal-arrow"
-                          />
-                        </button>
-                      );
-                    }
-                  )}
+                          <div className="template-desc">{modelo.descricao}</div>
+                        </div>
+                        <ChevronRight size={18} className="template-arrow" />
+                      </div>
+                    );
+                  })}
                 </div>
-              </>
+              </div>
             )}
 
-            {etapaModal === "confirmar" &&
-              modeloSelecionado && (
-                <>
-                  <div className="modal-header">
-                    <div className="modal-header-icon">
-                      <Check size={21} />
-                    </div>
+            {etapaModal === "confirmar" && modeloSelecionado && (
+              <div className="modal-content">
+                <div className="modal-icon-header"><Check size={24} /></div>
+                <h2>Template Confirmado</h2>
+                <p>Você escolheu criar um documento com o design <strong>{modelosDisponiveis[modeloSelecionado].nome}</strong>.</p>
+                <div className="modal-actions-row">
+                  <button className="btn-modal-outline" onClick={() => setEtapaModal("modelo")}>Alterar</button>
+                  <button className="btn-modal-solid" onClick={iniciarDoZero}>Preencher Dados <ArrowRight size={16}/></button>
+                </div>
+              </div>
+            )}
 
-                    <div>
-                      <h2 id="modelo-modal-titulo">
-                        Modelo selecionado
-                      </h2>
-
-                      <p>
-                        Você escolheu o modelo{" "}
-                        <strong>
-                          {
-                            modelosDisponiveis[
-                              modeloSelecionado
-                            ].nome
-                          }
-                        </strong>
-                        .
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="modelo-selecionado-box">
-                    <div className="modelo-selecionado-icon">
-                      <FileText size={25} />
-                    </div>
-
-                    <div>
-                      <strong>
-                        {
-                          modelosDisponiveis[
-                            modeloSelecionado
-                          ].nome
-                        }
-                      </strong>
-
-                      <p>
-                        {
-                          modelosDisponiveis[
-                            modeloSelecionado
-                          ].descricao
-                        }
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="modal-actions">
-                    <button
-                      className="modal-secondary-button"
-                      type="button"
-                      onClick={
-                        voltarParaModelos
-                      }
+            {etapaModal === "existente" && modeloSelecionado && (
+              <div className="modal-content">
+                <div className="modal-icon-header"><CopyPlus size={24} /></div>
+                <h2>Dados Existentes Encontrados</h2>
+                <p>Você tem <strong>{curriculosDoModelo.length}</strong> currículo(s) com este template. Deseja clonar os dados de um deles ou começar vazio?</p>
+                
+                <div className="clone-list">
+                  {curriculosDoModelo.map((curriculo) => (
+                    <div 
+                      key={curriculo.id}
+                      className={`clone-option ${curriculoSelecionado?.id === curriculo.id ? 'selected' : ''}`}
+                      onClick={() => setCurriculoSelecionado(curriculo)}
                     >
-                      Escolher outro
-                    </button>
-
-                    <button
-                      className="modal-primary-button"
-                      type="button"
-                      onClick={iniciarDoZero}
-                    >
-                      Criar currículo
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </>
-              )}
-
-            {etapaModal === "existente" &&
-              modeloSelecionado && (
-                <>
-                  <div className="modal-header">
-                    <div className="modal-header-icon">
-                      <FileText size={21} />
+                      <div className="clone-info">
+                        <strong>{curriculo.titulo || "Meu Currículo"}</strong>
+                        <span>{formatarData(curriculo.updated_at)}</span>
+                      </div>
+                      <div className="clone-radio">
+                        {curriculoSelecionado?.id === curriculo.id && <div className="radio-dot"></div>}
+                      </div>
                     </div>
+                  ))}
+                </div>
 
-                    <div>
-                      <h2 id="modelo-modal-titulo">
-                        Currículos existentes
-                      </h2>
-
-                      <p>
-                        Você já possui{" "}
-                        <strong>
-                          {curriculosDoModelo.length}
-                        </strong>{" "}
-                        currículo(s) usando o modelo{" "}
-                        <strong>
-                          {
-                            modelosDisponiveis[
-                              modeloSelecionado
-                            ].nome
-                          }
-                        </strong>
-                        .
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="modal-question">
-                    <h3>
-                      O que você deseja fazer?
-                    </h3>
-
-                    <p>
-                      Escolha um currículo para
-                      visualizar ou crie um novo
-                      usando este modelo.
-                    </p>
-                  </div>
-
-                  <div className="curriculos-modal-lista">
-                    {curriculosDoModelo.map(
-                      (curriculo) => (
-                        <div
-                          className="curriculo-modal-item"
-                          key={curriculo.id}
-                        >
-                          <div className="curriculo-existente-icon">
-                            <FileText size={20} />
-                          </div>
-
-                          <div className="curriculo-modal-info">
-                            <strong>
-                              {curriculo.titulo ||
-                                "Meu currículo"}
-                            </strong>
-
-                            <small>
-                              Atualizado em{" "}
-                              {formatarData(
-                                curriculo.updated_at
-                              )}
-                            </small>
-                          </div>
-
-                          <button
-                            className="curriculo-modal-preview-button"
-                            type="button"
-                            onClick={() =>
-                              abrirVisualizacao(
-                                curriculo
-                              )
-                            }
-                          >
-                            <Eye size={15} />
-                            Visualizar
-                          </button>
-                        </div>
-                      )
-                    )}
-                  </div>
-
-                  <div className="modal-actions">
-                    <button
-                      className="modal-secondary-button"
-                      type="button"
-                      onClick={
-                        voltarParaModelos
-                      }
-                    >
-                      Escolher outro
-                    </button>
-
-                    <button
-                      className="modal-primary-button"
-                      type="button"
-                      onClick={
-                        escolherCriarNovo
-                      }
-                    >
-                      <CopyPlus size={17} />
-                      Criar novo
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </>
-              )}
-
-            {etapaModal === "dados" &&
-              modeloSelecionado && (
-                <>
-                  <div className="modal-header">
-                    <div className="modal-header-icon">
-                      <CopyPlus size={21} />
-                    </div>
-
-                    <div>
-                      <h2 id="modelo-modal-titulo">
-                        Como deseja começar?
-                      </h2>
-
-                      <p>
-                        Você está criando um novo
-                        currículo com o modelo{" "}
-                        <strong>
-                          {
-                            modelosDisponiveis[
-                              modeloSelecionado
-                            ].nome
-                          }
-                        </strong>
-                        .
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="modal-question">
-                    <h3>
-                      Começar do zero
-                    </h3>
-
-                    <p>
-                      Crie um currículo vazio e
-                      preencha todas as informações
-                      manualmente.
-                    </p>
-                  </div>
-
-                  <button
-                    className="opcao-zero-button"
-                    type="button"
-                    onClick={iniciarDoZero}
-                  >
-                    <div className="opcao-zero-icon">
-                      <FileText size={19} />
-                    </div>
-
-                    <div>
-                      <strong>
-                        Começar do zero
-                      </strong>
-
-                      <span>
-                        Usar um currículo vazio
-                      </span>
-                    </div>
-
-                    <ArrowRight size={17} />
+                <div className="modal-actions-row">
+                  <button className="btn-modal-outline" onClick={iniciarDoZero}>Iniciar Vazio</button>
+                  <button className="btn-modal-solid" onClick={reutilizarDados} disabled={!curriculoSelecionado}>
+                    Clonar Selecionado <ArrowRight size={16}/>
                   </button>
-
-                  <div className="modal-question modal-question-reutilizar">
-                    <h3>
-                      Ou reutilizar dados
-                    </h3>
-
-                    <p>
-                      Escolha um currículo do
-                      banco para copiar seus dados
-                      para o novo currículo.
-                    </p>
-                  </div>
-
-                  {curriculosDoModelo.length > 0 ? (
-                    <div className="curriculos-modal-lista">
-                      {curriculosDoModelo.map(
-                        (curriculo) => {
-                          const selecionado =
-                            curriculoSelecionado?.id ===
-                            curriculo.id;
-
-                          return (
-                            <button
-                              className={`curriculo-modal-item curriculo-modal-selecao ${
-                                selecionado
-                                  ? "selecionado"
-                                  : ""
-                              }`}
-                              type="button"
-                              key={curriculo.id}
-                              onClick={() =>
-                                selecionarCurriculoParaReutilizar(
-                                  curriculo
-                                )
-                              }
-                            >
-                              <div className="curriculo-existente-icon">
-                                <FileText
-                                  size={20}
-                                />
-                              </div>
-
-                              <div className="curriculo-modal-info">
-                                <strong>
-                                  {curriculo.titulo ||
-                                    "Meu currículo"}
-                                </strong>
-
-                                <small>
-                                  Atualizado em{" "}
-                                  {formatarData(
-                                    curriculo.updated_at
-                                  )}
-                                </small>
-                              </div>
-
-                              <div className="curriculo-modal-check">
-                                {selecionado && (
-                                  <Check size={16} />
-                                )}
-                              </div>
-                            </button>
-                          );
-                        }
-                      )}
-                    </div>
-                  ) : (
-                    <div className="sem-dados-reutilizacao">
-                      <p>
-                        Não existem outros
-                        currículos disponíveis
-                        para reutilização.
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="modal-actions">
-                    <button
-                      className="modal-secondary-button"
-                      type="button"
-                      onClick={
-                        voltarParaEscolhaExistente
-                      }
-                    >
-                      Voltar
-                    </button>
-
-                    <button
-                      className="modal-primary-button"
-                      type="button"
-                      onClick={
-                        reutilizarDados
-                      }
-                      disabled={
-                        !curriculoSelecionado
-                      }
-                    >
-                      <CopyPlus size={17} />
-                      Utilizar dados
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
-                </>
-              )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {visualizacaoAberta &&
-        curriculoVisualizacao && (
-          <div
-            className="curriculo-preview-overlay"
-            onMouseDown={(event) => {
-              if (
-                event.target ===
-                event.currentTarget
-              ) {
-                fecharVisualizacao();
-              }
-            }}
-          >
-            <div
-              className="curriculo-preview-modal"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="curriculo-preview-titulo"
-            >
-              <header className="curriculo-preview-header">
-                <div className="curriculo-preview-header-info">
-                  <span>
-                    Pré-visualização
-                  </span>
-
-                  <h2 id="curriculo-preview-titulo">
-                    {curriculoVisualizacao.titulo ||
-                      "Meu currículo"}
-                  </h2>
-
-                  <p>
-                    Modelo:{" "}
-                    {modelosDisponiveis[
-                      curriculoVisualizacao.modelo
-                    ]?.nome ||
-                      curriculoVisualizacao.modelo}
-                  </p>
-                </div>
-
-                <button
-                  className="curriculo-preview-close"
-                  type="button"
-                  aria-label="Fechar pré-visualização"
-                  onClick={
-                    fecharVisualizacao
-                  }
-                  disabled={gerandoPdf}
-                >
-                  <X size={20} />
-                </button>
-              </header>
-
-              <div className="curriculo-preview-body">
-                <div className="curriculo-preview-sheet">
-                  <PreviewCurriculo
-                    modelo={
-                      curriculoVisualizacao.modelo
-                    }
-                    dados={
-                      curriculoVisualizacao.dados ||
-                      {}
-                    }
-                  />
-                </div>
+      {visualizacaoAberta && curriculoVisualizacao && (
+        <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) fecharVisualizacao(); }}>
+          <div className="preview-panel">
+            <div className="preview-top">
+              <div>
+                <span className="preview-tag">Modo Visualização</span>
+                <h2>{curriculoVisualizacao.titulo || "Documento"}</h2>
               </div>
-
-              <footer className="curriculo-preview-footer">
-                <div className="curriculo-preview-footer-info">
-                  {erroExportacao && (
-                    <p>
-                      {erroExportacao}
-                    </p>
-                  )}
-                </div>
-
-                <div className="curriculo-preview-actions">
-                  <button
-                    className="curriculo-preview-secondary"
-                    type="button"
-                    onClick={
-                      fecharVisualizacao
-                    }
-                    disabled={gerandoPdf}
-                  >
-                    Fechar
-                  </button>
-
-                  <button
-                    className="curriculo-preview-primary"
-                    type="button"
-                    onClick={
-                      exportarCurriculo
-                    }
-                    disabled={gerandoPdf}
-                  >
-                    <Download size={17} />
-
-                    {gerandoPdf
-                      ? "Exportando..."
-                      : "Exportar"}
-                  </button>
-                </div>
-              </footer>
+              <button className="btn-close-modal" onClick={fecharVisualizacao} disabled={gerandoPdf}><X size={20} /></button>
+            </div>
+            <div className="preview-scroll-area">
+              <div className="preview-document-wrapper">
+                <PreviewCurriculo modelo={curriculoVisualizacao.modelo} dados={curriculoVisualizacao.dados || {}} />
+              </div>
+            </div>
+            <div className="preview-bottom">
+              <div className="preview-status">{erroExportacao}</div>
+              <div className="preview-actions">
+                <button className="btn-modal-outline" onClick={fecharVisualizacao} disabled={gerandoPdf}>Cancelar</button>
+                <button className="btn-modal-solid" onClick={exportarCurriculo} disabled={gerandoPdf}>
+                  <Download size={16} /> {gerandoPdf ? "Processando..." : "Baixar PDF"}
+                </button>
+              </div>
             </div>
           </div>
-        )}
+        </div>
+      )}
     </main>
   );
 };

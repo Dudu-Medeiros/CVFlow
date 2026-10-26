@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// 1. Atualizado para buscar o Hook da pasta correta
 import { useAuth } from "../../hooks/useAuth"; 
-
-// 2. Importando nossos novos serviços centralizados
 import { apiFetch } from "../../services/api";
 import { setToken } from "../../services/auth";
-
 import {
   Mail,
   Lock,
@@ -15,8 +10,8 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
+  Sparkles
 } from "lucide-react";
-
 import "./Auth.css";
 import logo from "../../assets/logo-cvflow-sem-fundo.png";
 
@@ -24,23 +19,21 @@ const Auth = () => {
   const [modo, setModo] = useState("login");
   const navigate = useNavigate();
   const { login } = useAuth();
-
+  
   const [mostrarSenhaLogin, setMostrarSenhaLogin] = useState(false);
   const [mostrarSenhaRegistro, setMostrarSenhaRegistro] = useState(false);
   const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
-
+  
   const [emailLogin, setEmailLogin] = useState("");
   const [senhaLogin, setSenhaLogin] = useState("");
   const [lembrarDeMim, setLembrarDeMim] = useState(false);
-
   const [erroLogin, setErroLogin] = useState("");
   const [carregandoLogin, setCarregandoLogin] = useState(false);
-
+  
   const [nomeRegistro, setNomeRegistro] = useState("");
   const [emailRegistro, setEmailRegistro] = useState("");
   const [senhaRegistro, setSenhaRegistro] = useState("");
   const [confirmarSenhaRegistro, setConfirmarSenhaRegistro] = useState("");
-
   const [erroRegistro, setErroRegistro] = useState("");
   const [carregandoRegistro, setCarregandoRegistro] = useState(false);
   const [mensagemRegistro, setMensagemRegistro] = useState("");
@@ -49,15 +42,12 @@ const Auth = () => {
     e.preventDefault();
     setErroLogin("");
     setCarregandoLogin(true);
-
     if (!emailLogin || !senhaLogin) {
       setErroLogin("Preencha todos os campos.");
       setCarregandoLogin(false);
       return;
     }
-
     try {
-      // Usando nosso cliente HTTP centralizado
       const dados = await apiFetch("/auth/login", {
         method: "POST",
         body: JSON.stringify({
@@ -65,15 +55,11 @@ const Auth = () => {
           senha: senhaLogin,
         }),
       });
-
-      // Salva o token usando o serviço (que já gerencia local/session storage)
       setToken(dados.token, lembrarDeMim);
-
       login(dados.usuario);
       navigate("/flow");
     } catch (erro) {
       console.error("Erro ao realizar login:", erro);
-      // apiFetch já lança o erro tratado do Backend
       setErroLogin(erro.message || "Não foi possível conectar ao servidor.");
     } finally {
       setCarregandoLogin(false);
@@ -85,27 +71,24 @@ const Auth = () => {
     setErroRegistro("");
     setMensagemRegistro("");
     setCarregandoRegistro(true);
-
+    
     if (!nomeRegistro || !emailRegistro || !senhaRegistro || !confirmarSenhaRegistro) {
       setErroRegistro("Preencha todos os campos.");
       setCarregandoRegistro(false);
       return;
     }
-
     if (senhaRegistro !== confirmarSenhaRegistro) {
       setErroRegistro("As senhas não coincidem.");
       setCarregandoRegistro(false);
       return;
     }
-
     if (senhaRegistro.length < 6) {
       setErroRegistro("A senha deve possuir pelo menos 6 caracteres.");
       setCarregandoRegistro(false);
       return;
     }
-
+    
     try {
-      // Usando nosso cliente HTTP centralizado
       await apiFetch("/auth/register", {
         method: "POST",
         body: JSON.stringify({
@@ -114,15 +97,13 @@ const Auth = () => {
           senha: senhaRegistro,
         }),
       });
-
-      // Sucesso: limpa os campos e avisa o usuário
+      
       setNomeRegistro("");
       setEmailRegistro("");
       setSenhaRegistro("");
       setConfirmarSenhaRegistro("");
-
       setEmailLogin(emailRegistro.trim());
-      setMensagemRegistro("Conta criada com sucesso! Agora faça login para continuar.");
+      setMensagemRegistro("Conta criada com sucesso! Faça login para continuar.");
       setModo("login");
     } catch (erro) {
       console.error("Erro ao realizar cadastro:", erro);
@@ -142,17 +123,19 @@ const Auth = () => {
   return (
     <main className={`auth-container ${modo}`}>
       <div className="auth-box">
+        
         <div className="auth-forms">
-          <div className="auth-logo">
+          <div className="auth-logo" onClick={() => navigate("/")}>
             <img src={logo} alt="CVFlow" />
           </div>
 
+          {/* FORMULÁRIO DE LOGIN */}
           <div className="auth-form login-form">
             <div className="auth-content">
               <span className="auth-badge">Bem-vindo de volta</span>
-              <h1>Entre na sua conta</h1>
-              <p>Acesse seu espaço e continue construindo seu próximo currículo.</p>
-
+              <h1>Acesse sua conta</h1>
+              <p>Continue construindo sua próxima grande oportunidade profissional.</p>
+              
               <form onSubmit={handleLogin}>
                 <div className="input-group">
                   <Mail size={18} />
@@ -163,7 +146,7 @@ const Auth = () => {
                     onChange={(e) => setEmailLogin(e.target.value)}
                   />
                 </div>
-
+                
                 <div className="input-group password-group">
                   <Lock size={18} />
                   <input
@@ -181,57 +164,58 @@ const Auth = () => {
                     {mostrarSenhaLogin ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-
+                
                 <div className="auth-options">
-                  <label>
+                  <label className="checkbox-container">
                     <input
                       type="checkbox"
                       checked={lembrarDeMim}
                       onChange={(e) => setLembrarDeMim(e.target.checked)}
                     />
+                    <span className="checkmark"></span>
                     Lembrar de mim
                   </label>
-                  <a href="#">Esqueci minha senha</a>
+                  <a href="#" className="forgot-password">Esqueci minha senha</a>
                 </div>
-
+                
                 {mensagemRegistro && (
-                  <p className="auth-success" role="status">
+                  <div className="auth-feedback success" role="status">
                     {mensagemRegistro}
-                  </p>
+                  </div>
                 )}
-
+                
                 {erroLogin && (
-                  <p className="auth-error" role="alert">
+                  <div className="auth-feedback error" role="alert">
                     {erroLogin}
-                  </p>
+                  </div>
                 )}
-
+                
                 <button
-                  className="auth-button"
+                  className="auth-button hover-lift"
                   type="submit"
                   disabled={carregandoLogin}
-                  aria-busy={carregandoLogin}
                 >
-                  {carregandoLogin ? "Entrando..." : "Entrar"}
+                  {carregandoLogin ? "Entrando..." : "Entrar na plataforma"}
                   {!carregandoLogin && <ArrowRight size={18} />}
                 </button>
               </form>
-
+              
               <div className="auth-switch">
-                <span>Ainda não possui uma conta?</span>
+                <span>Novo por aqui?</span>
                 <button type="button" onClick={alternarModo}>
-                  Criar conta
+                  Criar uma conta grátis
                 </button>
               </div>
             </div>
           </div>
 
+          {/* FORMULÁRIO DE REGISTRO */}
           <div className="auth-form registro-form">
             <div className="auth-content">
               <span className="auth-badge">Comece agora</span>
               <h1>Crie sua conta</h1>
-              <p>Preencha seus dados e comece a criar currículos profissionais.</p>
-
+              <p>Preencha seus dados e tenha acesso a currículos profissionais ilimitados.</p>
+              
               <form onSubmit={handleRegistro}>
                 <div className="input-group">
                   <User size={18} />
@@ -242,22 +226,22 @@ const Auth = () => {
                     onChange={(e) => setNomeRegistro(e.target.value)}
                   />
                 </div>
-
+                
                 <div className="input-group">
                   <Mail size={18} />
                   <input
                     type="email"
-                    placeholder="Seu e-mail"
+                    placeholder="Seu melhor e-mail"
                     value={emailRegistro}
                     onChange={(e) => setEmailRegistro(e.target.value)}
                   />
                 </div>
-
+                
                 <div className="input-group password-group">
                   <Lock size={18} />
                   <input
                     type={mostrarSenhaRegistro ? "text" : "password"}
-                    placeholder="Crie uma senha"
+                    placeholder="Crie uma senha forte"
                     value={senhaRegistro}
                     onChange={(e) => setSenhaRegistro(e.target.value)}
                   />
@@ -265,12 +249,11 @@ const Auth = () => {
                     type="button"
                     className="password-toggle"
                     onClick={() => setMostrarSenhaRegistro(!mostrarSenhaRegistro)}
-                    aria-label={mostrarSenhaRegistro ? "Ocultar senha" : "Mostrar senha"}
                   >
                     {mostrarSenhaRegistro ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-
+                
                 <div className="input-group password-group">
                   <Lock size={18} />
                   <input
@@ -283,63 +266,54 @@ const Auth = () => {
                     type="button"
                     className="password-toggle"
                     onClick={() => setMostrarConfirmacao(!mostrarConfirmacao)}
-                    aria-label={mostrarConfirmacao ? "Ocultar senha" : "Mostrar senha"}
                   >
                     {mostrarConfirmacao ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-
+                
                 {erroRegistro && (
-                  <p className="auth-error" role="alert">
+                  <div className="auth-feedback error" role="alert">
                     {erroRegistro}
-                  </p>
+                  </div>
                 )}
-
+                
                 <button
-                  className="auth-button"
+                  className="auth-button hover-lift"
                   type="submit"
                   disabled={carregandoRegistro}
-                  aria-busy={carregandoRegistro}
                 >
                   {carregandoRegistro ? "Criando conta..." : "Criar minha conta"}
                   {!carregandoRegistro && <ArrowRight size={18} />}
                 </button>
               </form>
-
+              
               <div className="auth-switch">
                 <span>Já possui uma conta?</span>
                 <button type="button" onClick={alternarModo}>
-                  Entrar
+                  Fazer login
                 </button>
               </div>
             </div>
           </div>
         </div>
 
+        {/* PAINEL DECORATIVO (MARKETING) */}
         <div className="auth-right">
           <div className="auth-decoration">
             <div className="decoration-circle"></div>
             <div className="decoration-circle small"></div>
           </div>
-
+          
           <div className="auth-message login-message">
-            <span>CVFlow</span>
-            <h2>
-              Seu currículo.
-              <br />
-              Sua melhor oportunidade.
-            </h2>
-            <p>Crie, personalize e conquiste novas oportunidades profissionais.</p>
+            <div className="message-icon"><Sparkles size={24} /></div>
+            <h2>O seu próximo passo <br />começa aqui.</h2>
+            <p>Mais de milhares de currículos criados e oportunidades conquistadas através da nossa tecnologia.</p>
           </div>
-
+          
           <div className="auth-message registro-message">
-            <span>CVFlow</span>
-            <h2>
-              Comece sua jornada.
-              <br />
-              Destaque seu potencial.
-            </h2>
-            <p>Transforme suas experiências em um currículo que representa você.</p>
+            <div className="message-icon"><Sparkles size={24} /></div>
+            <h2>Destaque-se <br />para os recrutadores.</h2>
+            <p>Templates testados no mercado, estruturação inteligente e exportação em PDF instantânea.</p>
           </div>
         </div>
       </div>
