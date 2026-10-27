@@ -36,6 +36,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; /* Adicionado para ancorar a logo no centro */
+  min-height: 85px; /* Mantém a altura do cabeçalho estável */
 }
 
 .btn-voltar {
@@ -49,6 +51,8 @@
   cursor: pointer;
   transition: color 0.2s;
   font-family: inherit;
+  position: relative;
+  z-index: 2; /* Garante que o botão fique clicável acima de tudo */
 }
 
 .btn-voltar:hover {
@@ -60,10 +64,14 @@
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.3s;
+  position: absolute; /* Remove do fluxo padrão para centralização exata */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .planos-logo:hover {
-  transform: scale(1.02);
+  transform: translateX(-50%) scale(1.02); /* Mantém o centro durante a animação */
 }
 
 .spacer {
@@ -367,7 +375,6 @@
   .plano-destaque {
     transform: none;
   }
-
   .plano-destaque:hover {
     transform: translateY(-5px);
   }
