@@ -20,10 +20,10 @@ import {
 } from "lucide-react";
 import "./CriarCurriculo.css";
 import PreviewCurriculo from "../../../components/CriarCurriculo/PreviewCurriculo";
+import SeletorDeCores from "../../../components/CriarCurriculo/SeletorDeCores"; 
 import { criarCurriculo, atualizarCurriculo } from "../../../services/curriculoService";
 
 const criarId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-
 const campoVazio = {
   nome: "",
   cargo: "",
@@ -39,6 +39,7 @@ const campoVazio = {
   projetos: [],
   idiomas: [],
   cursos: [],
+  cor: "",
 };
 
 const modelosIniciais = {
@@ -148,29 +149,29 @@ function ItemDinamico({ titulo, onRemove, children }) {
 export default function CriarCurriculo() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   const modoEdicao = location.state?.modoEdicao === true;
   const curriculoEdicao = location.state?.curriculo || null;
   const reutilizarDados = location.state?.reutilizarDados === true;
   const dadosIniciais = location.state?.dadosIniciais || null;
-
+  
   const [tituloCurriculo, setTituloCurriculo] = useState(() => {
     if (modoEdicao && curriculoEdicao?.titulo) return curriculoEdicao.titulo;
     if (!modoEdicao && reutilizarDados && curriculoEdicao?.titulo) return `${curriculoEdicao.titulo} - Novo`;
     return "Meu currículo";
   });
-
+  
   const [modeloSelecionado, setModeloSelecionado] = useState(() => {
     if (modoEdicao && curriculoEdicao?.modelo) return curriculoEdicao.modelo;
     return location.state?.modeloSelecionado || "ats";
   });
-
+  
   const [dadosCurriculo, setDadosCurriculo] = useState(() => {
     if (modoEdicao && curriculoEdicao?.dados) return normalizarDados(curriculoEdicao.dados);
     if (!modoEdicao && reutilizarDados && dadosIniciais) return normalizarDados(dadosIniciais);
     return normalizarDados();
   });
-
+  
   const [notificacao, setNotificacao] = useState(null);
   const [salvando, setSalvando] = useState(false);
 
@@ -218,7 +219,6 @@ export default function CriarCurriculo() {
   function selecionarFoto(event) {
     const arquivo = event.target.files?.[0];
     if (!arquivo) return;
-
     if (!arquivo.type.startsWith("image/")) {
       mostrarNotificacao("erro", "Imagem inválida", "Selecione um arquivo de imagem válido.");
       return;
@@ -227,7 +227,6 @@ export default function CriarCurriculo() {
       mostrarNotificacao("erro", "Imagem muito grande", "A imagem deve ter no máximo 2 MB.");
       return;
     }
-
     const leitor = new FileReader();
     leitor.onload = () => atualizarCampo("foto", leitor.result);
     leitor.readAsDataURL(arquivo);
@@ -247,12 +246,10 @@ export default function CriarCurriculo() {
       mostrarNotificacao("erro", "Nome do currículo", "Informe um nome para o currículo antes de salvar.");
       return;
     }
-
     if (modoEdicao && !curriculoEdicao?.id) {
       mostrarNotificacao("erro", "Não foi possível salvar", "Não foi possível identificar o currículo que será editado.");
       return;
     }
-
     try {
       setSalvando(true);
       
@@ -261,13 +258,13 @@ export default function CriarCurriculo() {
         modelo: modeloSelecionado,
         dados: dadosCurriculo,
       };
-
+      
       if (modoEdicao) {
         await atualizarCurriculo(curriculoEdicao.id, payload);
       } else {
         await criarCurriculo(payload);
       }
-
+      
       mostrarNotificacao(
         "sucesso",
         modoEdicao ? "Currículo atualizado!" : "Currículo salvo!",
@@ -343,6 +340,14 @@ export default function CriarCurriculo() {
 
       <div className="editor-layout">
         <section className="editor-formulario">
+          
+          {/* SELETOR DE CORES INJETADO E LIMPO AQUI */}
+          <SeletorDeCores 
+            modelo={modeloSelecionado} 
+            corAtual={dadosCurriculo.cor} 
+            onChangeCor={(novaCor) => atualizarCampo("cor", novaCor)} 
+          />
+
           <TituloSecao numero="01" icone={UserRound} titulo="Informações pessoais" descricao="Preencha somente as informações que deseja exibir no currículo." />
           
           <div className="editor-form-grid">

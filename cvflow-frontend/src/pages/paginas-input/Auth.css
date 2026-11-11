@@ -377,6 +377,62 @@
 .auth-message h2 { font-size: 2.2rem; font-weight: 800; line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em; }
 .auth-message p { font-size: 1.05rem; line-height: 1.6; opacity: 0.85; margin: 0; }
 
+/* Botões Sociais */
+.social-auth-container {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.btn-social {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  background: white;
+  border: 1px solid var(--auth-border);
+  border-radius: 12px;
+  color: var(--auth-text-dark);
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.btn-social:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Divisor Visual (Ou) */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--auth-text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--auth-border);
+}
+
+.auth-divider span {
+  padding: 0 12px;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }

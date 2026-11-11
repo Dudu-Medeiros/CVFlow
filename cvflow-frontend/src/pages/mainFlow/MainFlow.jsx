@@ -10,7 +10,9 @@ import {
   CopyPlus,
   Download,
   Eye,
-  Rocket
+  Rocket, 
+  Layers,
+  Lock
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -22,18 +24,37 @@ import gerarPdf from "../../utils/gerarPdf";
 import "./MainFlow.css";
 
 const modelosDisponiveis = {
-  ats: {
-    nome: "ATS",
-    descricao: "Modelo objetivo e compatível com sistemas de recrutamento.",
+  minimalista: {
+    nome: "Minimalista",
+    descricao: "Modelo limpo, direto e em preto e branco. Ideal para iniciar.",
+    premium: false
   },
   moderno: {
     nome: "Moderno",
     descricao: "Modelo visual com duas colunas para destacar suas habilidades.",
+    premium: false
   },
   executivo: {
     nome: "Executivo",
     descricao: "Modelo elegante e organizado para apresentação profissional.",
+    premium: false
   },
+  ats: {
+    nome: "ATS (Premium)",
+    descricao: "Modelo otimizado para passar nos robôs de triagem das empresas.",
+    premium: true 
+  },
+};
+
+const dadosPreview = {
+  nome: "Nome Sobrenome",
+  cargo: "Especialista na sua área",
+  email: "contato@email.com",
+  telefone: "(11) 99999-9999",
+  localizacao: "São Paulo, SP",
+  resumo: "Profissional dedicado com foco em resultados, otimização de processos e trabalho em equipe para alcançar objetivos de alta performance no ambiente corporativo.",
+  habilidades: [{ id: 1, nome: "Comunicação" }, { id: 2, nome: "Liderança" }],
+  experiencias: [{ id: 1, empresa: "Nome da Empresa", funcao: "Cargo Principal", periodo: "2022 - Atual", atividades: "Gestão de projetos e equipes." }]
 };
 
 const MainFlow = () => {
@@ -46,6 +67,7 @@ const MainFlow = () => {
   const [erro, setErro] = useState("");
   
   const [modalAberto, setModalAberto] = useState(false);
+  const [modalUpgradeAberto, setModalUpgradeAberto] = useState(false); 
   const [modeloSelecionado, setModeloSelecionado] = useState(null);
   const [curriculosDoModelo, setCurriculosDoModelo] = useState([]);
   const [curriculoSelecionado, setCurriculoSelecionado] = useState(null);
@@ -82,6 +104,12 @@ const MainFlow = () => {
   }, []);
 
   const abrirModalCriacao = () => {
+    const planoAtual = usuario?.plano || "Starter";
+    
+    if (planoAtual === "Starter" && curriculos.length >= 1) {
+      setModalUpgradeAberto(true);
+      return;
+    }
     setModeloSelecionado(null);
     setCurriculosDoModelo([]);
     setCurriculoSelecionado(null);
@@ -140,7 +168,12 @@ const MainFlow = () => {
         .replace(/[^a-zA-Z0-9À-ÿ\s-]/g, "")
         .trim()
         .replace(/\s+/g, "-");
-      await gerarPdf(previewPdfRef.current, `${nomeArquivo || "curriculo"}.pdf`);
+        
+      await gerarPdf(
+        previewPdfRef.current, 
+        `${nomeArquivo || "curriculo"}.pdf`, 
+        usuario?.plano || "Starter"
+      );
     } catch (error) {
       setErroExportacao("Falha na geração do PDF. Tente novamente.");
     } finally {
@@ -167,7 +200,7 @@ const MainFlow = () => {
   const nomeUsuario = usuario?.nome || "Profissional";
   const curriculosCompletos = curriculos.filter((c) => c.dados?.completo).length;
   const ultimoCurriculo = curriculos[0];
-
+  
   const formatarData = (data) => {
     if (!data) return "Nenhuma atividade";
     return new Date(data).toLocaleDateString("pt-BR", { day: '2-digit', month: 'short', year: 'numeric' });
@@ -186,7 +219,7 @@ const MainFlow = () => {
             <div className="profile-initial">{nomeUsuario.charAt(0).toUpperCase()}</div>
             <div className="profile-info">
               <span className="profile-name">Minha Conta</span>
-              <span className="profile-plan">Plano Starter</span>
+              <span className="profile-plan" style={{textTransform: 'capitalize'}}>Plano {usuario?.plano || 'Starter'}</span>
             </div>
             <ChevronRight size={18} className="profile-arrow" />
           </div>
@@ -288,29 +321,90 @@ const MainFlow = () => {
         </div>
       )}
 
+      {modalUpgradeAberto && (
+        <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) setModalUpgradeAberto(false); }}>
+          <div className="modal-panel" role="dialog" style={{ maxWidth: '420px', textAlign: 'center' }}>
+            <button className="btn-close-modal" onClick={() => setModalUpgradeAberto(false)}><X size={20} /></button>
+            
+            <div className="modal-content">
+              <div className="modal-icon-header" style={{ color: "#d97706", backgroundColor: "#fef3c7", margin: "0 auto 16px auto" }}>
+                <Lock size={28} />
+              </div>
+              <h2>Limite do Plano Starter</h2>
+              <p style={{ margin: "12px 0", lineHeight: "1.6" }}>
+                O seu plano gratuito permite manter <strong>apenas 1 currículo ativo</strong> simultaneamente.
+              </p>
+              <p style={{ color: "#64748B", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                Faça o upgrade para o plano Pro e desbloqueie currículos ilimitados, remoção de marca d'água e acesso a todos os templates premium.
+              </p>
+              
+              <div className="modal-actions-row" style={{ justifyContent: "center", marginTop: "24px", flexDirection: "column", gap: "12px" }}>
+                <button 
+                  className="btn-modal-solid" 
+                  style={{ width: "100%", backgroundColor: "#6366f1", color: "white" }} 
+                  onClick={() => navigate("/planos")} 
+                >
+                  Fazer Upgrade para Pro
+                </button>
+                <button 
+                  className="btn-modal-outline" 
+                  style={{ width: "100%" }} 
+                  onClick={() => setModalUpgradeAberto(false)}
+                >
+                  Voltar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {modalAberto && (
         <div className="modal-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) fecharModal(); }}>
           <div className="modal-panel" role="dialog">
             <button className="btn-close-modal" onClick={fecharModal}><X size={20} /></button>
             
             {etapaModal === "modelo" && (
-              <div className="modal-content">
+              <div className="modal-content modal-content-large">
                 <div className="modal-icon-header"><Layers size={24} /></div>
                 <h2>Escolha um Template</h2>
                 <p>Selecione a estrutura visual que melhor representa seu perfil.</p>
-                <div className="template-list">
+                
+                <div className="template-grid">
                   {Object.entries(modelosDisponiveis).map(([chave, modelo]) => {
                     const emUso = curriculos.some((c) => c.modelo === chave);
+                    const bloqueadoPremium = modelo.premium && (usuario?.plano === "Starter" || !usuario?.plano);
+                    
                     return (
-                      <div className="template-option" key={chave} onClick={() => selecionarModelo(chave)}>
-                        <div className="template-thumb"><FileText size={24} /></div>
-                        <div className="template-data">
-                          <div className="template-title">
-                            {modelo.nome} {emUso && <span className="tag-in-use">Em uso</span>}
+                      <div 
+                        className={`template-card ${bloqueadoPremium ? 'bloqueado' : ''}`} 
+                        key={chave} 
+                        onClick={() => {
+                          if (bloqueadoPremium) {
+                            setModalUpgradeAberto(true);
+                          } else {
+                            selecionarModelo(chave);
+                          }
+                        }}
+                      >
+                        <div className="template-card-preview">
+                          <div className="template-thumbnail-wrapper">
+                            <PreviewCurriculo modelo={chave} dados={dadosPreview} />
                           </div>
-                          <div className="template-desc">{modelo.descricao}</div>
+                          {bloqueadoPremium && (
+                            <div className="template-premium-overlay">
+                              <Lock size={24} />
+                              <span>PRO</span>
+                            </div>
+                          )}
                         </div>
-                        <ChevronRight size={18} className="template-arrow" />
+                        <div className="template-card-info">
+                          <div className="template-card-header">
+                            <span className="template-card-title">{modelo.nome}</span>
+                            {emUso && <span className="tag-in-use">Em uso</span>}
+                          </div>
+                          <p className="template-card-desc">{modelo.descricao}</p>
+                        </div>
                       </div>
                     );
                   })}
@@ -353,7 +447,6 @@ const MainFlow = () => {
                     </div>
                   ))}
                 </div>
-
                 <div className="modal-actions-row">
                   <button className="btn-modal-outline" onClick={iniciarDoZero}>Iniciar Vazio</button>
                   <button className="btn-modal-solid" onClick={reutilizarDados} disabled={!curriculoSelecionado}>

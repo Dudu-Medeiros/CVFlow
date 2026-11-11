@@ -20,8 +20,8 @@
 
 .planos-header {
   width: 100%;
-  padding: 20px 0;
-  background: rgba(255, 255, 255, 0.8);
+  padding: 16px 0;
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.05);
   position: sticky;
@@ -36,8 +36,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Adicionado para ancorar a logo no centro */
-  min-height: 85px; /* Mantém a altura do cabeçalho estável */
+  position: relative; 
+  min-height: 50px; 
 }
 
 .btn-voltar {
@@ -52,7 +52,8 @@
   transition: color 0.2s;
   font-family: inherit;
   position: relative;
-  z-index: 2; /* Garante que o botão fique clicável acima de tudo */
+  z-index: 2; 
+  flex: 1;
 }
 
 .btn-voltar:hover {
@@ -60,22 +61,97 @@
 }
 
 .planos-logo {
-  height: 85px;
+  height: 75px;
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.3s;
-  position: absolute; /* Remove do fluxo padrão para centralização exata */
+  position: absolute; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
 }
 
 .planos-logo:hover {
-  transform: translateX(-50%) scale(1.02); /* Mantém o centro durante a animação */
+  transform: translateX(-50%) scale(1.02);
 }
 
-.spacer {
-  width: 0px;
+.planos-header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+  z-index: 2;
+}
+
+/* Estilos do Perfil Logado no Header */
+.header-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 6px 16px 6px 6px;
+  border-radius: 50px;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.header-profile:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.profile-initial {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.profile-info-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile-name {
+  font-weight: 600; 
+  font-size: 0.85rem; 
+  color: var(--text-dark);
+}
+
+.profile-plan {
+  font-size: 0.7rem; 
+  color: var(--text-gray); 
+  font-weight: 500;
+}
+
+/* Estilos do Botão de Login no Header */
+.btn-login-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-login-header:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
 }
 
 .planos-main {
@@ -227,6 +303,11 @@
   transform: scale(1.05);
 }
 
+/* Novo estilo para destacar o plano atual do usuário */
+.plano-atual {
+  border: 2px solid #10B981;
+}
+
 .badge-popular {
   position: absolute;
   top: -14px;
@@ -240,6 +321,24 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Badge específica para o plano atual do usuário */
+.badge-atual {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10B981;
+  color: white;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  z-index: 10;
 }
 
 .plano-header {
@@ -320,7 +419,7 @@
   border: 1px solid #CBD5E1;
 }
 
-.btn-normal:hover {
+.btn-normal:hover:not(:disabled) {
   border-color: var(--primary);
   color: var(--primary);
 }
@@ -332,9 +431,18 @@
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
 
-.btn-destaque:hover {
+.btn-destaque:hover:not(:disabled) {
   background: #1D4ED8;
   transform: translateY(-2px);
+}
+
+.btn-plano:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  border: 1px solid #e2e8f0;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
 }
 
 .plano-recursos {
@@ -360,7 +468,8 @@
   flex-shrink: 0;
 }
 
-.plano-destaque .check-icon {
+.plano-destaque .check-icon,
+.plano-atual .check-icon {
   color: var(--ai-primary);
 }
 
@@ -394,7 +503,7 @@
     font-size: 2.5rem;
   }
   
-  .spacer {
-    display: none;
+  .planos-header-actions {
+    display: none; /* Em telas muito pequenas, oculta o perfil para manter o foco no voltar/logo */
   }
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Planos.css";
 import logo from "../../assets/logo-cvflow-sem-fundo.png";
+import { useAuth } from "../../hooks/useAuth";
 import {
   ArrowLeft,
   Check,
@@ -40,7 +41,7 @@ const PLANOS = [
       "Todos os templates Premium",
       "Sem marca d'água",
       "Duplicação rápida de currículos",
-      "Suporte prioritário"
+      "Paleta de cores para dar a sua cara"
     ],
     destaque: false,
     botao: "Assinar Pro"
@@ -66,8 +67,12 @@ const PLANOS = [
 
 const Planos = () => {
   const navigate = useNavigate();
+  const { usuario } = useAuth();
+  
   const [isTrimestral, setIsTrimestral] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  
+  const planoAtual = usuario ? (usuario.plano?.toLowerCase() || "starter") : null;
 
   useEffect(() => {
     setIsVisible(true);
@@ -82,8 +87,28 @@ const Planos = () => {
             <ArrowLeft size={20} />
             <span>Voltar</span>
           </button>
+          
           <img src={logo} alt="CVFlow" className="planos-logo" onClick={() => navigate("/")} />
-          <div className="spacer"></div>
+          
+          <div className="planos-header-actions">
+            {usuario ? (
+              <div className="header-profile" onClick={() => navigate("/perfil")}>
+                <div className="profile-initial">
+                  {usuario.nome ? usuario.nome.charAt(0).toUpperCase() : "U"}
+                </div>
+                <div className="profile-info-header">
+                  <span className="profile-name">Minha Conta</span>
+                  <span className="profile-plan" style={{ textTransform: 'capitalize' }}>
+                    Plano {usuario.plano || 'Starter'}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <button className="btn-login-header" onClick={() => navigate("/auth")}>
+                <UserRound size={16} /> Entrar
+              </button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -110,48 +135,65 @@ const Planos = () => {
         </div>
 
         <div className="planos-grid">
-          {PLANOS.map((plano) => (
-            <div key={plano.id} className={`plano-card ${plano.destaque ? "plano-destaque" : ""}`}>
-              {plano.destaque && <div className="badge-popular">Mais popular</div>}
-              
-              <div className="plano-header">
-                <plano.icone size={32} className={`plano-icon ${plano.destaque ? "icon-destaque" : ""}`} />
-                <h2>{plano.nome}</h2>
-              </div>
-              
-              <div className="plano-pricing">
-                <span className="moeda">R$</span>
-                <span className="valor">
-                  {isTrimestral ? plano.precoTrimestral : plano.precoMensal}
-                </span>
-                <span className="periodo">/mês</span>
-              </div>
-              
-              {isTrimestral && plano.precoMensal !== "0,00" && (
-                <div className="economia">
-                  Cobrado R$ {plano.id === "pro" ? "35,70" : "68,70"} a cada 3 meses
+          {PLANOS.map((plano) => {
+            const isPlanoAtual = planoAtual === plano.id;
+            
+            return (
+              <div key={plano.id} className={`plano-card ${plano.destaque ? "plano-destaque" : ""} ${isPlanoAtual ? "plano-atual" : ""}`}>
+                
+                {/* Lógica das Badges: Mostra "Seu Plano Atual" se for o uso do usuário, senão mostra "Mais popular" se for destaque */}
+                {isPlanoAtual ? (
+                  <div className="badge-atual">Seu plano atual</div>
+                ) : plano.destaque ? (
+                  <div className="badge-popular">Mais popular</div>
+                ) : null}
+                
+                <div className="plano-header">
+                  <plano.icone size={32} className={`plano-icon ${plano.destaque || isPlanoAtual ? "icon-destaque" : ""}`} />
+                  <h2>{plano.nome}</h2>
                 </div>
-              )}
-              {!isTrimestral && plano.precoMensal !== "0,00" && (
-                <div className="economia hidden-space">Espaço invisível</div>
-              )}
-
-              <p className="plano-desc">{plano.desc}</p>
-              
-              <button className={`btn-plano ${plano.destaque ? "btn-destaque" : "btn-normal"}`}>
-                {plano.botao}
-              </button>
-              
-              <ul className="plano-recursos">
-                {plano.recursos.map((rec, idx) => (
-                  <li key={idx}>
-                    <Check size={18} className="check-icon" />
-                    <span>{rec}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                
+                <div className="plano-pricing">
+                  <span className="moeda">R$</span>
+                  <span className="valor">
+                    {isTrimestral ? plano.precoTrimestral : plano.precoMensal}
+                  </span>
+                  <span className="periodo">/mês</span>
+                </div>
+                
+                {isTrimestral && plano.precoMensal !== "0,00" && (
+                  <div className="economia">
+                    Cobrado R$ {plano.id === "pro" ? "35,70" : "68,70"} a cada 3 meses
+                  </div>
+                )}
+                {!isTrimestral && plano.precoMensal !== "0,00" && (
+                  <div className="economia hidden-space">Espaço invisível</div>
+                )}
+                
+                <p className="plano-desc">{plano.desc}</p>
+                
+                <button 
+                  className={`btn-plano ${plano.destaque && !isPlanoAtual ? "btn-destaque" : "btn-normal"}`}
+                  disabled={isPlanoAtual}
+                  onClick={() => {
+                    if (!isPlanoAtual && !usuario) navigate("/auth");
+                    // Adicionar lógica de checkout aqui se houver
+                  }}
+                >
+                  {isPlanoAtual ? "Plano Atual" : plano.botao}
+                </button>
+                
+                <ul className="plano-recursos">
+                  {plano.recursos.map((rec, idx) => (
+                    <li key={idx}>
+                      <Check size={18} className="check-icon" />
+                      <span>{rec}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </main>
     </div>

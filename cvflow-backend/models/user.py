@@ -1,44 +1,28 @@
 from datetime import datetime, timezone
-
 from extensions import db
-
 
 class User(db.Model):
     __tablename__ = "users"
-
+    
     id = db.Column(db.Integer, primary_key=True)
-
-    nome = db.Column(
-        db.String(100),
-        nullable=False
-    )
-
-    email = db.Column(
-        db.String(120),
-        unique=True,
-        nullable=False
-    )
-
-    senha_hash = db.Column(
-        db.String(255),
-        nullable=False
-    )
-
+    codigo_verificacao = db.Column(db.String(6), nullable=True)
+    is_verified = db.Column(db.Boolean, default=False)
+    
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    senha_hash = db.Column(db.String(255), nullable=False)
+    
+    # Nova coluna para gerenciar os planos do SaaS
+    plano = db.Column(db.String(20), nullable=False, default="Starter")
+    
     curriculo_principal_id = db.Column(
         db.Integer,
-        db.ForeignKey(
-            "curriculos.id",
-            ondelete="SET NULL"
-        ),
+        db.ForeignKey("curriculos.id", ondelete="SET NULL"),
         nullable=True
     )
-
-    formato_padrao = db.Column(
-        db.String(20),
-        nullable=False,
-        default="pdf"
-    )
-
+    
+    formato_padrao = db.Column(db.String(20), nullable=False, default="pdf")
+    
     created_at = db.Column(
         db.DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc)

@@ -23,7 +23,6 @@ const Sidebar = () => {
     : partesNome[0];
     
   const inicial = nomeCompleto.charAt(0).toUpperCase();
-
   const isActive = (path) => location.pathname === path ? "active" : "";
 
   return (
@@ -82,7 +81,7 @@ const Sidebar = () => {
             <div className="user-avatar">{inicial}</div>
             <div className="user-details">
               <strong>{nomeExibicao}</strong>
-              <span>Plano Starter</span>
+              <span style={{ textTransform: "capitalize" }}>Plano {usuario?.plano || "Starter"}</span>
             </div>
           </div>
           
@@ -90,7 +89,6 @@ const Sidebar = () => {
             <LogOut size={18} /> Sair da conta
           </button>
         </div>
-
       </div>
     </aside>
   );

@@ -1,3 +1,4 @@
+/* PreviewCurriculo.css */
 .preview-curriculo {
   box-sizing: border-box;
   width: 100%;
@@ -200,8 +201,118 @@
   word-break: break-word;
 }
 
-/* ATS */
+/* Minimalista */
+.curriculo-minimalista-wrapper {
+  background: transparent !important; 
+}
 
+.curriculo-minimalista {
+  display: block;
+  width: 794px;
+  max-width: 794px;
+  min-width: 794px;
+  min-height: 1123px;
+  background-color: #ffffff;
+  color: #111111;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 46px 44px;
+  overflow-wrap: anywhere;
+  margin: 0 auto; 
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.08); 
+}
+
+.curriculo-minimalista .minimalista-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.curriculo-minimalista .minimalista-header h1 {
+  font-size: 26px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.curriculo-minimalista .minimalista-header h2 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #444;
+  margin-bottom: 16px;
+}
+
+.curriculo-minimalista .curriculo-contatos,
+.curriculo-minimalista .curriculo-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #333;
+}
+
+.curriculo-minimalista .minimalista-divisor {
+  height: 1px;
+  background-color: #000000;
+  width: 100%;
+  margin: 0 auto 24px auto;
+}
+
+.curriculo-minimalista .curriculo-secao {
+  margin-bottom: 24px;
+}
+
+.curriculo-minimalista .curriculo-secao h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+}
+
+.curriculo-minimalista .experiencia-item,
+.curriculo-minimalista .formacao-item,
+.curriculo-minimalista .projeto-item,
+.curriculo-minimalista .curso-item {
+  margin-bottom: 16px;
+}
+
+.curriculo-minimalista .item-cabecalho,
+.curriculo-minimalista .item-identificacao {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.curriculo-minimalista h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.curriculo-minimalista .item-periodo {
+  font-size: 12px;
+  color: #555;
+  white-space: nowrap;
+  margin-left: 16px;
+}
+
+.curriculo-minimalista .item-subtitulo {
+  font-size: 13px;
+  font-weight: 500;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.curriculo-minimalista p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* ATS */
 .ats-medida {
   position: absolute;
   z-index: -1;
@@ -328,7 +439,6 @@
 }
 
 /* Moderno */
-
 .curriculo-moderno {
   display: grid;
   grid-template-columns: 35% minmax(0, 65%);
@@ -338,6 +448,8 @@
   max-width: 794px;
   height: auto;
   min-height: 1123px;
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.08); 
+  margin: 0 auto;
 }
 
 .moderno-sidebar {
@@ -346,7 +458,7 @@
   min-height: 100%;
   padding: 42px 25px;
   overflow-wrap: anywhere;
-  background: #1e293b;
+  background: var(--cor-primaria);
   color: #ffffff;
 }
 
@@ -363,7 +475,7 @@
 
 .moderno-cargo {
   margin: 10px 0 0;
-  color: #cbd5e1;
+  color: rgba(255, 255, 255, 0.85); 
   font-size: 11px;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -394,7 +506,7 @@
 .moderno-contatos h2 {
   margin: 0 0 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #64748b;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
   color: #ffffff;
   font-size: 11px;
   font-weight: 700;
@@ -404,7 +516,7 @@
 
 .moderno-contatos p {
   margin: 8px 0 0;
-  color: #cbd5e1;
+  color: rgba(255, 255, 255, 0.85); 
   font-size: 9.5px;
   line-height: 1.6;
   overflow-wrap: anywhere;
@@ -416,14 +528,13 @@
 }
 
 .moderno-sidebar .curriculo-secao > h2 {
-  border-color: #64748b;
+  border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
 }
 
 .moderno-sidebar .habilidades-lista span,
 .moderno-sidebar .idiomas-lista span {
-  color: #cbd5e1;
-  font-size: 9.8px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .moderno-conteudo {
@@ -442,7 +553,6 @@
 }
 
 /* Executivo */
-
 .curriculo-executivo {
   display: block;
   width: 794px;
@@ -452,6 +562,8 @@
   overflow-wrap: anywhere;
   background: #ffffff;
   color: #334155;
+  box-shadow: 0 4px 22px rgba(15, 23, 42, 0.08); 
+  margin: 0 auto;
 }
 
 .executivo-header {
@@ -468,7 +580,7 @@
 .executivo-header h1 {
   max-width: 100%;
   margin: 0 0 9px;
-  color: #172033;
+  color: var(--cor-primaria);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 27px;
   font-weight: 700;
@@ -552,9 +664,10 @@
   content: "";
   display: block;
   width: 100%;
-  height: 1px;
+  height: 2px;
   margin-top: 8px;
-  background: #d4af37;
+  background: var(--cor-primaria); 
+  opacity: 0.85; 
 }
 
 .executivo-conteudo .curriculo-secao p {
@@ -656,57 +769,45 @@
   height: auto;
 }
 
-/* Responsividade intermediária */
-
 @media (max-width: 850px) {
   .ats-folha {
     width: 100%;
     max-width: 100%;
     padding: 32px;
   }
-
   .ats-medida {
     width: 100%;
     max-width: 100%;
     padding: 32px;
   }
-
   .curriculo-executivo {
     padding: 36px 32px;
   }
-
   .moderno-conteudo {
     padding: 32px 25px;
   }
-
   .moderno-sidebar {
     padding: 32px 20px;
   }
-
   .item-cabecalho,
   .formacao-item,
   .curso-item {
     gap: 18px;
   }
-
   .item-periodo {
     width: 32%;
     max-width: 32%;
   }
-
   .executivo-conteudo .item-cabecalho,
   .executivo-conteudo .formacao-item,
   .executivo-conteudo .curso-item {
     gap: 18px;
   }
-
   .executivo-conteudo .item-periodo {
     width: 32%;
     max-width: 32%;
   }
 }
-
-/* Responsividade para celulares */
 
 @media (max-width: 700px) {
   .preview-curriculo {
@@ -714,38 +815,31 @@
     max-width: 100%;
     overflow-x: hidden;
   }
-
   .curriculo-moderno {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     width: 100%;
     max-width: 100%;
   }
-
   .moderno-sidebar {
     width: 100%;
     max-width: 100%;
     padding: 30px 25px;
   }
-
   .moderno-conteudo {
     width: 100%;
     max-width: 100%;
     padding: 30px 25px;
   }
-
   .moderno-sidebar h1 {
     font-size: 22px;
   }
-
   .moderno-cargo {
     font-size: 11px;
   }
-
   .moderno-contatos {
     margin-top: 28px;
   }
-
   .item-cabecalho,
   .formacao-item,
   .curso-item,
@@ -756,50 +850,39 @@
     align-items: stretch;
     gap: 5px;
   }
-
   .item-identificacao {
     width: 100%;
     max-width: 100%;
   }
-
   .item-periodo,
   .executivo-conteudo .item-periodo {
     width: 100%;
     max-width: 100%;
     text-align: left;
   }
-
   .curriculo-secao {
     margin-top: 28px;
   }
-
   .curriculo-secao > h2 {
     font-size: 11px;
   }
-
   .curriculo-secao p {
     font-size: 10px;
     line-height: 1.6;
   }
-
   .curriculo-secao h3 {
     font-size: 10.8px;
   }
-
-  /* ATS no celular */
-
   .ats-paginas {
     width: 100%;
     max-width: 100%;
     gap: 16px;
   }
-
   .ats-medida {
     width: 100%;
     max-width: 100%;
     padding: 25px;
   }
-
   .ats-folha {
     width: 100%;
     max-width: 100%;
@@ -810,20 +893,16 @@
     padding: 25px;
     overflow: visible;
   }
-
   .ats-header {
     margin-bottom: 45px;
   }
-
   .ats-header h1 {
     font-size: 23px;
     line-height: 1.25;
   }
-
   .ats-header .curriculo-cargo {
     font-size: 11px;
   }
-
   .ats-header .curriculo-contatos,
   .ats-header .curriculo-links {
     justify-content: center;
@@ -831,47 +910,36 @@
     font-size: 9px;
     line-height: 1.6;
   }
-
   .ats-conteudo {
     width: 100%;
     max-width: 100%;
   }
-
   .ats-conteudo .curriculo-secao {
     margin-top: 26px;
   }
-
   .ats-conteudo > .ats-bloco.primeiro .curriculo-secao {
     margin-top: 0;
   }
-
   .ats-conteudo .curriculo-secao > h2 {
     margin-bottom: 14px;
   }
-
-  /* Executivo no celular */
-
   .curriculo-executivo {
     width: 100%;
     max-width: 100%;
     padding: 30px 25px;
   }
-
   .executivo-header {
     width: 100%;
     max-width: 100%;
   }
-
   .executivo-header h1 {
     font-size: 24px;
     line-height: 1.25;
   }
-
   .executivo-header .curriculo-cargo {
     margin-bottom: 15px;
     font-size: 11px;
   }
-
   .executivo-header .curriculo-contatos,
   .executivo-header .curriculo-links {
     justify-content: flex-start;
@@ -879,39 +947,31 @@
     font-size: 9px;
     line-height: 1.6;
   }
-
   .executivo-conteudo {
     width: 100%;
     max-width: 100%;
     padding-top: 42px;
   }
-
   .executivo-conteudo .curriculo-secao {
     margin-top: 28px;
   }
-
   .executivo-conteudo .curriculo-secao:first-child {
     margin-top: 0;
   }
-
   .executivo-conteudo .curriculo-secao > h2 {
     margin-bottom: 14px;
     font-size: 11px;
   }
-
   .executivo-conteudo .curriculo-secao p {
     font-size: 10px;
     line-height: 1.6;
   }
-
   .executivo-conteudo .curriculo-secao h3 {
     font-size: 10.8px;
   }
-
   .executivo-conteudo .item-periodo {
     font-size: 9.5px !important;
   }
-
   .executivo-conteudo .experiencia-item,
   .executivo-conteudo .formacao-item,
   .executivo-conteudo .projeto-item,
@@ -919,8 +979,6 @@
     margin-bottom: 23px;
   }
 }
-
-/* Celulares pequenos */
 
 @media (max-width: 420px) {
   .moderno-sidebar,
@@ -931,49 +989,38 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-
   .moderno-sidebar h1 {
     font-size: 20px;
   }
-
   .executivo-header h1 {
     font-size: 22px;
   }
-
   .ats-header h1 {
     font-size: 21px;
   }
-
   .ats-header {
     margin-bottom: 38px;
   }
-
   .curriculo-secao > h2 {
     font-size: 10.5px;
     letter-spacing: 0.35px;
   }
-
   .curriculo-secao p {
     font-size: 9.8px;
   }
-
   .habilidades-lista span,
   .idiomas-lista span {
     font-size: 10px;
   }
 }
 
-/* Impressão */
-
 @media print {
   .ats-medida {
     display: none;
   }
-
   .ats-paginas {
     display: block;
   }
-
   .ats-folha {
     width: 210mm;
     max-width: none;
@@ -986,7 +1033,6 @@
     break-after: page;
     page-break-after: always;
   }
-
   .ats-folha:last-child {
     break-after: auto;
     page-break-after: auto;

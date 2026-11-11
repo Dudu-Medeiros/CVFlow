@@ -71,7 +71,7 @@
 
 .modelos-lista {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
     max-width: 1240px;
     margin: 0 auto;
@@ -91,15 +91,19 @@
     box-shadow: 0 16px 35px rgba(15, 23, 42, 0.09);
 }
 
+.modelo-card.bloqueado {
+    border-color: #fef3c7;
+}
+
 .modelo-preview-container {
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    min-height: 340px;
-    padding: 34px 20px 20px;
-    overflow: hidden;
+    height: 380px;
+    padding: 34px 20px 0;
     background: #f1f5f9;
+    overflow: hidden;
 }
 
 .modelo-categoria {
@@ -116,24 +120,42 @@
     box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
-.modelo-imagem {
-    display: block;
-    width: 100%;
-    max-width: 255px;
-    height: 300px;
-    object-fit: contain;
-    object-position: top center;
-    background: #ffffff;
-    box-shadow: 0 7px 18px rgba(15, 23, 42, 0.1);
-    transform: scale(0.98);
-    transition: transform 0.25s ease;
+.modelo-thumbnail-wrapper {
+    width: 794px;
+    height: 1123px;
+    transform: scale(0.35);
+    transform-origin: top center;
+    pointer-events: none;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
-.modelo-card:hover .modelo-imagem {
-    transform: scale(1);
+.modelo-card:hover .modelo-thumbnail-wrapper {
+    transform: scale(0.36);
 }
 
-/* Informações dos cards */
+.modelo-premium-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modelo-premium-overlay svg {
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+    animation: pulse-star 2s infinite alternate;
+}
+
+@keyframes pulse-star {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
 
 .modelo-informacoes {
     display: flex;
@@ -205,7 +227,15 @@
     opacity: 0.6;
 }
 
-/* Benefícios */
+.modelo-card.bloqueado .botao-selecionar {
+    background: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.modelo-card.bloqueado .botao-selecionar:hover {
+    background: #d97706;
+    border-color: #d97706;
+}
 
 .modelos-beneficios {
     display: flex;
@@ -228,8 +258,6 @@
     color: #059669;
 }
 
-/* Modal de visualização */
-
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -248,7 +276,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 570px;
+    max-width: 650px;
     max-height: 90vh;
     overflow: hidden;
     border: 1px solid #e2e8f0;
@@ -303,19 +331,20 @@
 .modal-preview {
     display: flex;
     justify-content: center;
-    max-height: 53vh;
-    padding: 0 30px 25px;
-    overflow-y: auto;
+    height: 45vh;
+    padding: 20px 30px 0;
+    overflow: hidden;
     background: #f1f5f9;
 }
 
-.modal-preview img {
-    display: block;
-    width: 100%;
-    max-width: 430px;
-    height: auto;
-    object-fit: contain;
-    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
+.modal-thumbnail-wrapper {
+    width: 794px;
+    height: 1123px;
+    transform: scale(0.4);
+    transform-origin: top center;
+    pointer-events: none;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .modal-informacoes {
@@ -324,6 +353,7 @@
     justify-content: space-between;
     gap: 20px;
     padding: 22px 30px 28px;
+    border-top: 1px solid #e2e8f0;
 }
 
 .modal-informacoes p {
@@ -361,39 +391,24 @@
     opacity: 0.6;
 }
 
-/* Animações */
-
-@keyframes aparecer-modal {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes subir-modal {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsividade */
-
 @media (max-width: 1050px) {
     .modelos-page {
         padding: 0 4%;
     }
+}
 
+@media (max-width: 768px) {
     .modelos-lista {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .modelo-preview-container {
+        height: 320px;
+    }
+    .modelo-thumbnail-wrapper {
+        transform: scale(0.28);
+    }
+    .modelo-card:hover .modelo-thumbnail-wrapper {
+        transform: scale(0.29);
     }
 }
 
@@ -403,81 +418,56 @@
         justify-content: space-between;
         height: 72px;
     }
-
     .modelos-logo img {
         width: 80px;
     }
-
     .modelos-hero {
         margin: 45px auto 35px;
     }
-
     .modelos-hero h1 {
         font-size: 30px;
     }
-
     .modelos-hero p {
         font-size: 14px;
     }
-
-    .modelos-lista {
-        grid-template-columns: 1fr;
-        max-width: 390px;
-    }
-
-    .modelo-preview-container {
-        min-height: 360px;
-        padding: 34px 20px 20px;
-    }
-
-    .modelo-imagem {
-        max-width: 280px;
-        height: 330px;
-    }
-
     .modelo-acoes {
         flex-direction: column;
     }
-
     .botao-visualizar,
     .botao-selecionar {
         width: 100%;
     }
-
     .modelos-beneficios {
         align-items: flex-start;
         flex-direction: column;
         gap: 15px;
         padding: 35px 0;
     }
-
     .modal-overlay {
         padding: 15px;
     }
-
     .modelo-modal {
         max-height: 92vh;
         border-radius: 16px;
     }
-
     .modal-cabecalho {
         padding: 23px 20px 17px;
     }
-
     .modal-cabecalho h2 {
         font-size: 22px;
     }
-
     .modal-preview {
-        padding: 0 20px 20px;
+        padding: 20px 20px 0;
+        height: 40vh;
     }
-
+    .modal-thumbnail-wrapper {
+        transform: scale(0.35);
+    }
     .modal-informacoes {
         align-items: stretch;
         flex-direction: column;
         padding: 20px;
     }
-
     .modal-usar-modelo {
         width: 100%;
     }

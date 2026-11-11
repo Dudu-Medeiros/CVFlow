@@ -4,6 +4,10 @@ from flask_cors import CORS
 from config import Config
 from extensions import db
 
+from dotenv import load_dotenv
+load_dotenv() 
+
+from flask import Flask
 
 def create_app():
     app = Flask(__name__)
